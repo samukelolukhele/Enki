@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using server.Dto;
 using server.Interface;
 using server.Model;
 
@@ -15,8 +17,10 @@ namespace server.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
-        public UserController(IUserRepository _userRepository)
+        private readonly IMapper _mapper;
+        public UserController(IUserRepository _userRepository, IMapper mapper)
         {
+            this._mapper = mapper;
             this._userRepository = _userRepository;
         }
 
@@ -24,7 +28,7 @@ namespace server.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
         public IActionResult GetUsers()
         {
-            var users = _userRepository.GetUsers();
+            var users = _mapper.Map<List<UserDto>>(_userRepository.GetUsers());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -40,7 +44,7 @@ namespace server.Controllers
             if (!_userRepository.UserExists(email))
                 return NotFound();
 
-            var user = _userRepository.GetUser(email);
+            var user = _mapper.Map<UserDto>(_userRepository.GetUser(email));
 
             if (email == null)
                 return NotFound();
@@ -59,11 +63,10 @@ namespace server.Controllers
             if (!_userRepository.UserExistsById(id))
                 return NotFound();
 
+            var user = _mapper.Map<UserDto>(_userRepository.GetUserById(id));
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            var user = _userRepository.GetUserById(id);
-
 
             return Ok(user);
         }
