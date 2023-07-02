@@ -21,12 +21,12 @@ namespace server.Repository
             return _context.Users.OrderBy(u => u.id).ToList();
         }
 
-        public User GetUser(string email)
+        public User? GetUser(string email)
         {
             return _context.Users.Where(u => u.email == email).FirstOrDefault();
         }
 
-        public User GetUserById(int id)
+        public User? GetUserById(int id)
         {
             return _context.Users.Where(u => u.id == id).FirstOrDefault();
         }
@@ -39,6 +39,11 @@ namespace server.Repository
         public bool UserExistsById(int id)
         {
             return _context.Users.Any(u => u.id == id);
+        }
+
+        public ICollection<DayPlan> GetDayPlansByUser(int user_id)
+        {
+            return _context.DayPlans.Where(dp => dp.user_id == user_id).ToList();
         }
     }
 }

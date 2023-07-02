@@ -9,10 +9,10 @@ namespace server.Interface
     public interface IUserRepository
     {
         ICollection<User> GetUsers();
-        User GetUser(string email);
-        User GetUserById(int id);
+        User? GetUser(string email);
+        User? GetUserById(int id);
         bool UserExists(string email);
         bool UserExistsById(int id);
-
+        ICollection<DayPlan> GetDayPlansByUser(int user_id);
     }
 }
