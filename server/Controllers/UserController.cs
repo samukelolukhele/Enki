@@ -37,7 +37,7 @@ namespace server.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetUser(string email)
         {
-            if (_userRepository.UserExists(email))
+            if (!_userRepository.UserExists(email))
                 return NotFound();
 
             var user = _userRepository.GetUser(email);
@@ -56,7 +56,7 @@ namespace server.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetUserById(int id)
         {
-            if (_userRepository.UserExistsById(id))
+            if (!_userRepository.UserExistsById(id))
                 return NotFound();
 
             if (!ModelState.IsValid)
