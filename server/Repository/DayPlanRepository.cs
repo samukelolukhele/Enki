@@ -17,9 +17,9 @@ namespace server.Repository
 
         }
 
-        public ICollection<DayPlan> GetDayPlans()
+        public ICollection<DayPlan> GetDayPlans(int user_id)
         {
-            return _context.DayPlans.OrderBy(dp => dp.id).ToList();
+            return _context.DayPlans.Where(dp => dp.user_id == user_id).ToList();
         }
 
         public DayPlan? GetDayPlan(int id)
@@ -32,6 +32,10 @@ namespace server.Repository
             return _context.DayPlans.Any(dp => dp.id == id);
         }
 
+        public bool UserExists(int user_id)
+        {
+            return _context.Users.Any(u => u.id == user_id);
+        }
         public ICollection<Model.Task> GetTasksByDayPlan(int day_plan_id)
         {
             return _context.Tasks.Where(t => t.day_plan_id == day_plan_id).ToList();

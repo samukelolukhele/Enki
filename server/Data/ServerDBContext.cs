@@ -16,6 +16,7 @@ namespace server.Data
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<DayPlan> DayPlans { get; set; } = null!;
         public DbSet<Model.Task> Tasks { get; set; } = null!;
+        public DbSet<Milestone> Milestones { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -24,11 +24,14 @@ namespace server.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("{user_id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<DayPlan>))]
-        public IActionResult GetDayPlans()
+        public IActionResult GetDayPlans(int user_id)
         {
-            var dayPlans = _mapper.Map<List<DayPlanDto>>(_dayPlanRepository.GetDayPlans());
+            if (!_dayPlanRepository.UserExists(user_id))
+                return NotFound();
+
+            var dayPlans = _mapper.Map<List<DayPlanDto>>(_dayPlanRepository.GetDayPlans(user_id));
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -53,9 +56,8 @@ namespace server.Controllers
 
         }
 
-        // TODO: Replace type with TaskDto instead
         [HttpGet("tasks/{id}")]
-        [ProducesResponseType(200, Type = typeof(Model.Task))]
+        [ProducesResponseType(200, Type = typeof(TaskDto))]
         public IActionResult GetTasksByDayPlan(int day_plan_id)
         {
             if (!_dayPlanRepository.DayPlanExists(day_plan_id))
@@ -64,7 +66,7 @@ namespace server.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var tasks = _mapper.Map<List<Model.Task>>(_dayPlanRepository.GetTasksByDayPlan(day_plan_id));
+            var tasks = _mapper.Map<List<TaskDto>>(_dayPlanRepository.GetTasksByDayPlan(day_plan_id));
 
             return Ok(tasks);
         }

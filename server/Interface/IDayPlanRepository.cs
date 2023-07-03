@@ -8,9 +8,10 @@ namespace server.Interface
 {
     public interface IDayPlanRepository
     {
-        ICollection<DayPlan> GetDayPlans();
+        ICollection<DayPlan> GetDayPlans(int user_id);
         DayPlan? GetDayPlan(int id);
         bool DayPlanExists(int id);
+        bool UserExists(int user_id);
         ICollection<Model.Task> GetTasksByDayPlan(int day_plan_id);
     }
 }
