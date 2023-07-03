@@ -16,19 +16,19 @@ namespace server.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepository _repo;
         private readonly IMapper _mapper;
-        public UserController(IUserRepository _userRepository, IMapper mapper)
+        public UserController(IUserRepository _repo, IMapper mapper)
         {
             this._mapper = mapper;
-            this._userRepository = _userRepository;
+            this._repo = _repo;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<UserDto>))]
         public IActionResult GetUsers()
         {
-            var users = _mapper.Map<List<UserDto>>(_userRepository.GetUsers());
+            var users = _mapper.Map<List<UserDto>>(_repo.GetUsers());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -37,14 +37,14 @@ namespace server.Controllers
         }
 
         [HttpGet("email/{email}")]
-        [ProducesResponseType(200, Type = typeof(User))]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
         [ProducesResponseType(400)]
         public IActionResult GetUser(string email)
         {
-            if (!_userRepository.UserExists(email))
+            if (!_repo.UserExists(email))
                 return NotFound();
 
-            var user = _mapper.Map<UserDto>(_userRepository.GetUser(email));
+            var user = _mapper.Map<UserDto>(_repo.GetUser(email));
 
             if (email == null)
                 return NotFound();
@@ -56,14 +56,14 @@ namespace server.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(200, Type = typeof(User))]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
         [ProducesResponseType(400)]
         public IActionResult GetUserById(int id)
         {
-            if (!_userRepository.UserExistsById(id))
+            if (!_repo.UserExistsById(id))
                 return NotFound();
 
-            var user = _mapper.Map<UserDto>(_userRepository.GetUserById(id));
+            var user = _mapper.Map<UserDto>(_repo.GetUserById(id));
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

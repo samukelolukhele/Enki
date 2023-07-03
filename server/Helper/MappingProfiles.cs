@@ -14,6 +14,7 @@ namespace server.Helper
         {
             CreateMap<User, UserDto>();
             CreateMap<DayPlan, DayPlanDto>();
+            CreateMap<Model.Task, TaskDto>();
         }
     }
 }
