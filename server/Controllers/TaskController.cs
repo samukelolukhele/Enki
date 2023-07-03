@@ -62,10 +62,9 @@ namespace server.Controllers
         [HttpGet("milestones/{task_id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<TaskDto>))]
         [ProducesResponseType(400)]
-        //TODO: Change type to MilestoneDto
         public IActionResult GetMilestonesByTask(int task_id)
         {
-            return GetTaskDataValidation<Milestone>(task_id, _repo.GetMilestonesByTask(task_id), _repo.TaskExists(task_id));
+            return GetTaskDataValidation<MilestoneDto>(task_id, _repo.GetMilestonesByTask(task_id), _repo.TaskExists(task_id));
 
         }
 
