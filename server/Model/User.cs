@@ -13,5 +13,7 @@ namespace server.Model
         public string fName { get; set; } = null!;
         public string lName { get; set; } = null!;
         public ICollection<DayPlan> day_plans { get; } = new List<DayPlan>();
+        public DateTime created_at { get; set; }
+        public DateTime updated_at { get; set; }
     }
 }

@@ -12,5 +12,9 @@ namespace server.Model
         public string title { get; set; } = null!;
         public string? description { get; set; }
         public Task task { get; } = null!;
+        public DateTime created_at { get; set; }
+        public DateTime updated_at { get; set; }
+        public DateTime deadline { get; set; }
+        public bool is_completed { get; set; }
     }
 }
