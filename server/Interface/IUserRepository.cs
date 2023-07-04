@@ -14,5 +14,7 @@ namespace server.Interface
         bool UserExists(string email);
         bool UserExistsById(int id);
         ICollection<DayPlan> GetDayPlansByUser(int user_id);
+        bool CreateUser(User user);
+        bool Save();
     }
 }

@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BCrypt.Net;
 using server.Data;
 using server.Interface;
 using server.Model;
+
 
 namespace server.Repository
 {
@@ -44,6 +46,22 @@ namespace server.Repository
         public ICollection<DayPlan> GetDayPlansByUser(int user_id)
         {
             return _context.DayPlans.Where(dp => dp.user_id == user_id).ToList();
+        }
+
+        public bool CreateUser(User user)
+        {
+            user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
+            user.created_at = DateTime.Now.ToUniversalTime();
+            user.updated_at = DateTime.Now.ToUniversalTime();
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            return Save();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }

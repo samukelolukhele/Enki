@@ -70,5 +70,39 @@ namespace server.Controllers
 
             return Ok(user);
         }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateUser([FromBody] UserDto newUser)
+        {
+            if (newUser == null)
+                return BadRequest(ModelState);
+
+            var user = _repo.GetUsers()
+                .Where(u => u.email.Trim().ToUpper() == newUser.email.TrimEnd().ToUpper());
+
+            if (user.Count() > 0)
+            {
+                //!Remove after testing
+                Console.WriteLine(user);
+
+                ModelState.AddModelError("", "User already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userMap = _mapper.Map<User>(newUser);
+
+            if (_repo.CreateUser(userMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving user");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Successfully created");
+        }
     }
 }
