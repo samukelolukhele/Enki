@@ -84,9 +84,6 @@ namespace server.Controllers
 
             if (user.Count() > 0)
             {
-                //!Remove after testing
-                Console.WriteLine(user);
-
                 ModelState.AddModelError("", "User already exists");
                 return StatusCode(422, ModelState);
             }
@@ -96,7 +93,7 @@ namespace server.Controllers
 
             var userMap = _mapper.Map<User>(newUser);
 
-            if (_repo.CreateUser(userMap))
+            if (_repo.CreateUser(userMap) == false)
             {
                 ModelState.AddModelError("", "Something went wrong while saving user");
                 return StatusCode(500, ModelState);

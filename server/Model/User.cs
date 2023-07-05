@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,10 +8,15 @@ namespace server.Model
 {
     public class User
     {
+        [Key]
         public int id { get; set; }
+        [Required]
         public string email { get; set; } = null!;
+        [Required]
         public string password { get; set; } = null!;
+        [Required]
         public string fName { get; set; } = null!;
+        [Required]
         public string lName { get; set; } = null!;
         public ICollection<DayPlan> day_plans { get; } = new List<DayPlan>();
         public DateTime created_at { get; set; }
