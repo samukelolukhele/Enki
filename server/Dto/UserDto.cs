@@ -22,15 +22,4 @@ namespace server.Dto
         public DateTime created_at { get; set; } = DateTime.UtcNow;
         public DateTime updated_at { get; set; } = DateTime.UtcNow;
     }
-
-    public class UpdateUserDto
-    {
-        public string? email { get; set; }
-        public string? fName { get; set; }
-        public string? lName { get; set; }
-        public DateTime updated_at { get; set; } = DateTime.UtcNow;
-    }
-
-
-
 }

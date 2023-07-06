@@ -75,11 +75,9 @@ namespace server.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult CreateUser([FromBody] CreateUserDto newUser)
         {
-
-            Console.WriteLine(newUser);
-
             if (newUser == null)
                 return BadRequest(ModelState);
 
@@ -123,6 +121,55 @@ namespace server.Controllers
             return Ok(token);
         }
 
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateUser(Guid id, [FromBody] User updatedUser)
+
+        {
+            if (updatedUser == null)
+                return BadRequest("No new user data added");
+
+            if (!_repo.UserExistsById(id))
+                return NotFound("User does not exist");
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var userMap = _mapper.Map<User>(updatedUser);
+
+            if (!_repo.UpdateUser(updatedUser))
+            {
+                ModelState.AddModelError("", "Something went wrong updating the user.");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteUser(Guid id)
+        {
+            if (!_repo.UserExistsById(id))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var userToDelete = _repo.GetUserById(id);
+
+            if (!_repo.DeleteUser(userToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong deleting the user.");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
 
     }
 

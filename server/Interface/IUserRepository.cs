@@ -15,6 +15,8 @@ namespace server.Interface
         bool UserExistsById(Guid id);
         ICollection<DayPlan> GetDayPlansByUser(Guid user_id);
         bool CreateUser(User user);
+        bool UpdateUser(User user);
+        bool DeleteUser(User user);
         bool Login(string username, string password);
         string CreateToken(string email);
         bool Save();

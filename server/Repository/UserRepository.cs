@@ -10,6 +10,7 @@ using server.Data;
 using server.Interface;
 using server.Model;
 using Microsoft.IdentityModel.Tokens;
+using server.Dto;
 
 namespace server.Repository
 {
@@ -55,9 +56,29 @@ namespace server.Repository
 
         public bool CreateUser(User user)
         {
+            user.email = user.email.Trim().ToLower();
             user.id = Guid.NewGuid();
             user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
             _context.Users.Add(user);
+            return Save();
+        }
+
+        public bool UpdateUser(User user)
+        {
+            _context.Users.Entry(user);
+
+            user.updated_at = DateTime.UtcNow;
+
+            _context.Entry(user).Property(x => x.fName).IsModified = user.fName.Trim() != null;
+            _context.Entry(user).Property(x => x.lName).IsModified = user.lName.Trim() != null;
+            _context.Entry(user).Property(x => x.updated_at).IsModified = true;
+
+            return Save();
+        }
+
+        public bool DeleteUser(User user)
+        {
+            _context.Users.Remove(user);
             return Save();
         }
 
@@ -96,5 +117,7 @@ namespace server.Repository
 
             return jwt;
         }
+
+
     }
 }
