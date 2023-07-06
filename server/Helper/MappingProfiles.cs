@@ -12,8 +12,8 @@ namespace server.Helper
     {
         public MappingProfiles()
         {
-            CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
+            CreateMap<User, GetUserDto>();
+            CreateMap<CreateUserDto, User>();
             CreateMap<DayPlan, DayPlanDto>();
             CreateMap<Model.Task, TaskDto>();
             CreateMap<Milestone, MilestoneDto>();

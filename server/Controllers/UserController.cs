@@ -26,10 +26,10 @@ namespace server.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<UserDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<GetUserDto>))]
         public IActionResult GetUsers()
         {
-            var users = _mapper.Map<List<UserDto>>(_repo.GetUsers());
+            var users = _mapper.Map<List<GetUserDto>>(_repo.GetUsers());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -38,14 +38,14 @@ namespace server.Controllers
         }
 
         [HttpGet("email/{email}")]
-        [ProducesResponseType(200, Type = typeof(UserDto))]
+        [ProducesResponseType(200, Type = typeof(GetUserDto))]
         [ProducesResponseType(400)]
         public IActionResult GetUser(string email)
         {
             if (!_repo.UserExists(email))
                 return NotFound();
 
-            var user = _mapper.Map<UserDto>(_repo.GetUser(email));
+            var user = _mapper.Map<GetUserDto>(_repo.GetUser(email));
 
             if (email == null)
                 return NotFound();
@@ -57,14 +57,14 @@ namespace server.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(200, Type = typeof(UserDto))]
+        [ProducesResponseType(200, Type = typeof(GetUserDto))]
         [ProducesResponseType(400)]
         public IActionResult GetUserById(Guid id)
         {
             if (!_repo.UserExistsById(id))
                 return NotFound();
 
-            var user = _mapper.Map<UserDto>(_repo.GetUserById(id));
+            var user = _mapper.Map<GetUserDto>(_repo.GetUserById(id));
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -75,7 +75,7 @@ namespace server.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateUser([FromBody] UserDto newUser)
+        public IActionResult CreateUser([FromBody] CreateUserDto newUser)
         {
 
             Console.WriteLine(newUser);

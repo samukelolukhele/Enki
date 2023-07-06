@@ -58,7 +58,6 @@ namespace server.Repository
             user.id = Guid.NewGuid();
             user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
             _context.Users.Add(user);
-            _context.SaveChanges();
             return Save();
         }
 
