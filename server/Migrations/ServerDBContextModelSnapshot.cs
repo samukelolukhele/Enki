@@ -24,11 +24,9 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Model.DayPlan", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("created_at")
                         .HasColumnType("timestamp with time zone");
@@ -42,8 +40,8 @@ namespace server.Migrations
                     b.Property<DateTime>("updated_at")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("user_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("user_id")
+                        .HasColumnType("uuid");
 
                     b.HasKey("id");
 
@@ -54,11 +52,9 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Model.Milestone", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("created_at")
                         .HasColumnType("timestamp with time zone");
@@ -72,8 +68,8 @@ namespace server.Migrations
                     b.Property<bool>("is_completed")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("task_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("task_id")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("title")
                         .IsRequired()
@@ -91,17 +87,15 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Model.Task", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("created_at")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("day_plan_id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("day_plan_id")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("deadline")
                         .HasColumnType("timestamp with time zone");
@@ -128,11 +122,9 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Model.User", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("created_at")
                         .HasColumnType("timestamp with time zone");

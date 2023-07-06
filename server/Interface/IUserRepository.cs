@@ -10,11 +10,13 @@ namespace server.Interface
     {
         ICollection<User> GetUsers();
         User? GetUser(string email);
-        User? GetUserById(int id);
+        User? GetUserById(Guid id);
         bool UserExists(string email);
-        bool UserExistsById(int id);
-        ICollection<DayPlan> GetDayPlansByUser(int user_id);
+        bool UserExistsById(Guid id);
+        ICollection<DayPlan> GetDayPlansByUser(Guid user_id);
         bool CreateUser(User user);
+        bool Login(string username, string password);
+        string CreateToken(string email);
         bool Save();
     }
 }

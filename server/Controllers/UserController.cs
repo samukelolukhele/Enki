@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -58,7 +59,7 @@ namespace server.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(UserDto))]
         [ProducesResponseType(400)]
-        public IActionResult GetUserById(int id)
+        public IActionResult GetUserById(Guid id)
         {
             if (!_repo.UserExistsById(id))
                 return NotFound();
@@ -76,6 +77,9 @@ namespace server.Controllers
         [ProducesResponseType(400)]
         public IActionResult CreateUser([FromBody] UserDto newUser)
         {
+
+            Console.WriteLine(newUser);
+
             if (newUser == null)
                 return BadRequest(ModelState);
 
@@ -93,13 +97,33 @@ namespace server.Controllers
 
             var userMap = _mapper.Map<User>(newUser);
 
-            if (_repo.CreateUser(userMap) == false)
+            if (!_repo.CreateUser(userMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving user");
                 return StatusCode(500, ModelState);
             }
 
-            return Ok("Successfully created");
+            var token = _repo.CreateToken(userMap.email);
+
+            return Ok(token);
         }
+
+        [HttpPost("login")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        public IActionResult Login(string username, string password)
+        {
+            if (!_repo.UserExists(username))
+                return Unauthorized("The email or password is incorrect.");
+
+            if (_repo.Login(username, password) == false)
+                return Unauthorized("The email or password is incorrect.");
+
+            var token = _repo.CreateToken(username);
+            return Ok(token);
+        }
+
+
     }
+
 }

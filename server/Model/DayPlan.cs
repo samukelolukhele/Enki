@@ -10,9 +10,9 @@ namespace server.Model
     public class DayPlan
     {
         [Key]
-        public int id { get; set; }
+        public Guid id { get; set; }
         [ForeignKey("User")]
-        public int user_id { get; set; }
+        public Guid user_id { get; set; }
         public User user { get; } = null!;
         public ICollection<Task> tasks { get; } = new List<Model.Task>();
         public DateTime created_at { get; set; }

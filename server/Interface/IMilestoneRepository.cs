@@ -8,9 +8,9 @@ namespace server.Interface
 {
     public interface IMilestoneRepository
     {
-        ICollection<Milestone> GetMilestones(int task_id);
-        Milestone? GetMilestone(int id);
-        bool MilestoneExists(int id);
-        bool TaskExists(int task_id);
+        ICollection<Milestone> GetMilestones(Guid task_id);
+        Milestone? GetMilestone(Guid id);
+        bool MilestoneExists(Guid id);
+        bool TaskExists(Guid task_id);
     }
 }

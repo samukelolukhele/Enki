@@ -17,21 +17,21 @@ namespace server.Repository
 
         }
 
-        public ICollection<Milestone> GetMilestones(int task_id)
+        public ICollection<Milestone> GetMilestones(Guid task_id)
         {
             return _context.Milestones.Where(m => m.task_id == task_id).ToList();
         }
 
-        public Milestone? GetMilestone(int id)
+        public Milestone? GetMilestone(Guid id)
         {
             return _context.Milestones.Where(m => m.id == id).FirstOrDefault();
         }
 
-        public bool MilestoneExists(int id)
+        public bool MilestoneExists(Guid id)
         {
             return _context.Milestones.Any(m => m.id == id);
         }
-        public bool TaskExists(int id)
+        public bool TaskExists(Guid id)
         {
             return _context.Tasks.Any(t => t.id == id);
         }

@@ -22,7 +22,7 @@ namespace server.Controllers
             this._repo = _repo;
         }
 
-        public IActionResult GetMilestoneDataValidator<T>(int id, object? repoCallFunc, bool doesExist)
+        public IActionResult GetMilestoneDataValidator<T>(Guid id, object? repoCallFunc, bool doesExist)
         {
 
             if (!doesExist)
@@ -42,7 +42,7 @@ namespace server.Controllers
         [HttpGet("{task_id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<MilestoneDto>))]
         [ProducesResponseType(400)]
-        public IActionResult GetMilestones(int task_id)
+        public IActionResult GetMilestones(Guid task_id)
         {
             return GetMilestoneDataValidator<List<MilestoneDto>>(task_id, _repo.GetMilestones(task_id), _repo.TaskExists(task_id));
         }
@@ -50,7 +50,7 @@ namespace server.Controllers
         [HttpGet("id/{id}")]
         [ProducesResponseType(200, Type = typeof(MilestoneDto))]
         [ProducesResponseType(400)]
-        public IActionResult GetTask(int id)
+        public IActionResult GetTask(Guid id)
         {
             return GetMilestoneDataValidator<MilestoneDto>(id, _repo.GetMilestone(id), _repo.MilestoneExists(id));
         }

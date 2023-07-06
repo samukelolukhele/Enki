@@ -10,9 +10,9 @@ namespace server.Model
     public class Task
     {
         [Key]
-        public int id { get; set; }
+        public Guid id { get; set; }
         [ForeignKey("DayPlan")]
-        public int day_plan_id { get; set; }
+        public Guid day_plan_id { get; set; }
         [Required]
         public string title { get; set; } = null!;
         public string? description { get; set; } = default;

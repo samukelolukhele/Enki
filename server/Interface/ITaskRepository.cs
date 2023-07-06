@@ -8,11 +8,11 @@ namespace server.Interface
 {
     public interface ITaskRepository
     {
-        ICollection<Model.Task> GetTasks(int day_plan_id);
-        Model.Task? GetTask(int id);
-        ICollection<Milestone> GetMilestonesByTask(int task_id);
-        bool TaskExists(int id);
-        bool DayPlanExists(int day_plan_id);
+        ICollection<Model.Task> GetTasks(Guid day_plan_id);
+        Model.Task? GetTask(Guid id);
+        ICollection<Milestone> GetMilestonesByTask(Guid task_id);
+        bool TaskExists(Guid id);
+        bool DayPlanExists(Guid day_plan_id);
 
     }
 }

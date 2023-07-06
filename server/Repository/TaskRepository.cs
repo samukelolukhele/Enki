@@ -17,27 +17,27 @@ namespace server.Repository
 
         }
 
-        public ICollection<Model.Task> GetTasks(int day_plan_id)
+        public ICollection<Model.Task> GetTasks(Guid day_plan_id)
         {
             return _context.Tasks.Where(t => t.day_plan_id == day_plan_id).ToList();
         }
 
-        public Model.Task? GetTask(int id)
+        public Model.Task? GetTask(Guid id)
         {
             return _context.Tasks.Where(t => t.id == id).FirstOrDefault();
         }
 
-        public bool TaskExists(int id)
+        public bool TaskExists(Guid id)
         {
             return _context.Tasks.Any(t => t.id == id);
         }
 
-        public bool DayPlanExists(int day_plan_id)
+        public bool DayPlanExists(Guid day_plan_id)
         {
             return _context.DayPlans.Any(dp => dp.id == day_plan_id);
         }
 
-        public ICollection<Milestone> GetMilestonesByTask(int task_id)
+        public ICollection<Milestone> GetMilestonesByTask(Guid task_id)
         {
             return _context.Milestones.Where(m => m.task_id == task_id).ToList();
         }

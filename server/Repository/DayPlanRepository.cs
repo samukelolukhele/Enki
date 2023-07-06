@@ -17,26 +17,26 @@ namespace server.Repository
 
         }
 
-        public ICollection<DayPlan> GetDayPlans(int user_id)
+        public ICollection<DayPlan> GetDayPlans(Guid user_id)
         {
             return _context.DayPlans.Where(dp => dp.user_id == user_id).ToList();
         }
 
-        public DayPlan? GetDayPlan(int id)
+        public DayPlan? GetDayPlan(Guid id)
         {
             return _context.DayPlans.Where(dp => dp.id == id).FirstOrDefault();
         }
 
-        public bool DayPlanExists(int id)
+        public bool DayPlanExists(Guid id)
         {
             return _context.DayPlans.Any(dp => dp.id == id);
         }
 
-        public bool UserExists(int user_id)
+        public bool UserExists(Guid user_id)
         {
             return _context.Users.Any(u => u.id == user_id);
         }
-        public ICollection<Model.Task> GetTasksByDayPlan(int day_plan_id)
+        public ICollection<Model.Task> GetTasksByDayPlan(Guid day_plan_id)
         {
             return _context.Tasks.Where(t => t.day_plan_id == day_plan_id).ToList();
         }

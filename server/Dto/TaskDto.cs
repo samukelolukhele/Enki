@@ -7,7 +7,7 @@ namespace server.Dto
 {
     public class TaskDto
     {
-        public int id { get; set; }
+        public Guid id { get; set; }
         public string title { get; set; } = string.Empty;
         public string? description { get; set; } = default;
         public bool is_completed { get; set; }

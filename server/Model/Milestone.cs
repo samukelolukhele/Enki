@@ -10,9 +10,9 @@ namespace server.Model
     public class Milestone
     {
         [Key]
-        public int id { get; set; }
+        public Guid id { get; set; }
         [ForeignKey("Task")]
-        public int task_id { get; set; }
+        public Guid task_id { get; set; }
         [Required]
         public string title { get; set; } = null!;
         public string? description { get; set; }

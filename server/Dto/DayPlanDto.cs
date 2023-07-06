@@ -7,7 +7,7 @@ namespace server.Dto
 {
     public class DayPlanDto
     {
-        public int id { get; set; }
-        public int user_id { get; set; }
+        public Guid id { get; set; }
+        public Guid user_id { get; set; }
     }
 }

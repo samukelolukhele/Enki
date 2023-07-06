@@ -27,7 +27,7 @@ namespace server.Controllers
         [HttpGet("{user_id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<DayPlanDto>))]
         [ProducesResponseType(400)]
-        public IActionResult GetDayPlans(int user_id)
+        public IActionResult GetDayPlans(Guid user_id)
         {
             if (!_repo.UserExists(user_id))
                 return NotFound();
@@ -43,7 +43,7 @@ namespace server.Controllers
         [HttpGet("id/{id}")]
         [ProducesResponseType(200, Type = typeof(DayPlanDto))]
         [ProducesResponseType(400)]
-        public IActionResult GetDayPlan(int id)
+        public IActionResult GetDayPlan(Guid id)
         {
             if (!_repo.DayPlanExists(id))
                 return NotFound();
@@ -59,7 +59,7 @@ namespace server.Controllers
 
         [HttpGet("tasks/{id}")]
         [ProducesResponseType(200, Type = typeof(TaskDto))]
-        public IActionResult GetTasksByDayPlan(int day_plan_id)
+        public IActionResult GetTasksByDayPlan(Guid day_plan_id)
         {
             if (!_repo.DayPlanExists(day_plan_id))
                 return NotFound();
