@@ -9,9 +9,13 @@ namespace server.Interface
     public interface IDayPlanRepository
     {
         ICollection<DayPlan> GetDayPlans(Guid user_id);
+        bool CreateDayPlan(DayPlan dayPlan);
+        bool UpdateDayPlan(DayPlan dayPlan);
+        bool DeleteDayPlan(DayPlan dayPlan);
         DayPlan? GetDayPlan(Guid id);
         bool DayPlanExists(Guid id);
         bool UserExists(Guid user_id);
         ICollection<Model.Task> GetTasksByDayPlan(Guid day_plan_id);
+        bool Save();
     }
 }

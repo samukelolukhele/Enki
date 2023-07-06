@@ -72,6 +72,33 @@ namespace server.Controllers
             return Ok(tasks);
         }
 
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult CreateUser([FromBody] CreateDayPlanDto newDayPlan)
+        {
+            if (newDayPlan == null)
+                return BadRequest(ModelState);
 
+            if (_repo.DayPlanExists(newDayPlan.id))
+            {
+                ModelState.AddModelError("", "User already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var dayPlanMap = _mapper.Map<DayPlan>(newDayPlan);
+
+            if (!_repo.CreateDayPlan(dayPlanMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving the day plan");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Day plan successfully created!");
+        }
     }
 }

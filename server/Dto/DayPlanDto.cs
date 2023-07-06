@@ -8,6 +8,8 @@ namespace server.Dto
     public class DayPlanDto
     {
         public Guid id { get; set; }
+        public string title { get; set; } = null!;
+        public string? description { get; set; }
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
         public DateTime deadline { get; set; }
@@ -18,6 +20,8 @@ namespace server.Dto
     {
         public Guid id { get; set; }
         public Guid user_id { get; set; }
+        public string title { get; set; } = null!;
+        public string? description { get; set; } = null!;
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
         public DateTime deadline { get; set; }

@@ -81,10 +81,8 @@ namespace server.Controllers
             if (newUser == null)
                 return BadRequest(ModelState);
 
-            var user = _repo.GetUsers()
-                .Where(u => u.email.Trim().ToUpper() == newUser.email.TrimEnd().ToUpper());
 
-            if (user.Count() > 0)
+            if (_repo.UserExists(newUser.email))
             {
                 ModelState.AddModelError("", "User already exists");
                 return StatusCode(422, ModelState);

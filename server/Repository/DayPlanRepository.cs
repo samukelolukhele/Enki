@@ -40,5 +40,29 @@ namespace server.Repository
         {
             return _context.Tasks.Where(t => t.day_plan_id == day_plan_id).ToList();
         }
+
+        public bool CreateDayPlan(DayPlan dayPlan)
+        {
+            dayPlan.id = Guid.NewGuid();
+            _context.DayPlans.Add(dayPlan);
+            return Save();
+        }
+
+        public bool UpdateDayPlan(DayPlan dayPlan)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteDayPlan(DayPlan dayPlan)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
+        }
+
     }
 }

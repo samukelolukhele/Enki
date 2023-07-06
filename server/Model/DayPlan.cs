@@ -14,6 +14,8 @@ namespace server.Model
         [ForeignKey("User")]
         public Guid user_id { get; set; }
         public User user { get; } = null!;
+        public string title { get; set; } = null!;
+        public string? description { get; set; }
         public ICollection<Task> tasks { get; } = new List<Model.Task>();
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }

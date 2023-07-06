@@ -41,7 +41,7 @@ namespace server.Repository
 
         public bool UserExists(string email)
         {
-            return _context.Users.Any(u => u.email == email);
+            return _context.Users.Any(u => u.email.Trim().ToLower() == email.TrimEnd().ToLower());
         }
 
         public bool UserExistsById(Guid id)
