@@ -18,7 +18,6 @@ namespace server.Model
         public string? description { get; set; } = default;
         [Required]
         public bool is_completed { get; set; }
-        public DayPlan day_plan { get; } = null!;
         public ICollection<Milestone> milestones { get; } = new List<Milestone>();
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }

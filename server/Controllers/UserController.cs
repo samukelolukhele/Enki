@@ -29,7 +29,7 @@ namespace server.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<GetUserDto>))]
         public IActionResult GetUsers()
         {
-            var users = _mapper.Map<List<GetUserDto>>(_repo.GetUsers());
+            var users = _mapper.Map<GetUserDto>(_repo.GetUsers());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

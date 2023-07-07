@@ -20,27 +20,13 @@ namespace server.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-            .HasMany<DayPlan>(u => u.day_plans)
-            .WithOne(dp => dp.user)
-            .HasForeignKey(dp => dp.user_id)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<DayPlan>()
-            .HasMany(dp => dp.tasks)
-            .WithOne(t => t.day_plan)
-            .HasForeignKey(t => t.day_plan_id)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>().Navigation(u => u.day_plans).AutoInclude();
 
-            modelBuilder.Entity<Model.Task>()
-            .HasMany(t => t.milestones)
-            .WithOne(m => m.task)
-            .HasForeignKey(m => m.task_id)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(modelBuilder);
         }
+
     }
 
 }

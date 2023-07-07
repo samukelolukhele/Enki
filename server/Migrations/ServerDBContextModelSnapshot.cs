@@ -28,6 +28,9 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("Userid")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("created_at")
                         .HasColumnType("timestamp with time zone");
 
@@ -52,7 +55,7 @@ namespace server.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("user_id");
+                    b.HasIndex("Userid");
 
                     b.ToTable("DayPlans");
                 });
@@ -61,6 +64,9 @@ namespace server.Migrations
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("Taskid")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("created_at")
@@ -87,7 +93,7 @@ namespace server.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("task_id");
+                    b.HasIndex("Taskid");
 
                     b.ToTable("Milestones");
                 });
@@ -96,6 +102,9 @@ namespace server.Migrations
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("DayPlanid")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("created_at")
@@ -122,7 +131,7 @@ namespace server.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("day_plan_id");
+                    b.HasIndex("DayPlanid");
 
                     b.ToTable("Tasks");
                 });
@@ -162,35 +171,23 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Model.DayPlan", b =>
                 {
-                    b.HasOne("server.Model.User", "user")
+                    b.HasOne("server.Model.User", null)
                         .WithMany("day_plans")
-                        .HasForeignKey("user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("user");
+                        .HasForeignKey("Userid");
                 });
 
             modelBuilder.Entity("server.Model.Milestone", b =>
                 {
-                    b.HasOne("server.Model.Task", "task")
+                    b.HasOne("server.Model.Task", null)
                         .WithMany("milestones")
-                        .HasForeignKey("task_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("task");
+                        .HasForeignKey("Taskid");
                 });
 
             modelBuilder.Entity("server.Model.Task", b =>
                 {
-                    b.HasOne("server.Model.DayPlan", "day_plan")
+                    b.HasOne("server.Model.DayPlan", null)
                         .WithMany("tasks")
-                        .HasForeignKey("day_plan_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("day_plan");
+                        .HasForeignKey("DayPlanid");
                 });
 
             modelBuilder.Entity("server.Model.DayPlan", b =>

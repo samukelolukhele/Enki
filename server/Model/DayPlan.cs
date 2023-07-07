@@ -13,7 +13,6 @@ namespace server.Model
         public Guid id { get; set; }
         [ForeignKey("User")]
         public Guid user_id { get; set; }
-        public User user { get; } = null!;
         public string title { get; set; } = null!;
         public string? description { get; set; }
         public ICollection<Task> tasks { get; } = new List<Model.Task>();
