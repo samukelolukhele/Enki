@@ -47,15 +47,24 @@ namespace server.Repository
             _context.DayPlans.Add(dayPlan);
             return Save();
         }
-
-        public bool UpdateDayPlan(DayPlan dayPlan)
+        public bool UpdateDayPlan(Guid id, DayPlan dayPlan)
         {
-            throw new NotImplementedException();
+            var exist = _context.DayPlans.Where(dp => dp.id == id).FirstOrDefault();
+
+            if (exist == null)
+                return false;
+
+            exist.title = dayPlan.title;
+            exist.description = dayPlan.description;
+            exist.updated_at = DateTime.UtcNow;
+
+            return Save();
         }
 
         public bool DeleteDayPlan(DayPlan dayPlan)
         {
-            throw new NotImplementedException();
+            _context.DayPlans.Remove(dayPlan);
+            return Save();
         }
 
         public bool Save()

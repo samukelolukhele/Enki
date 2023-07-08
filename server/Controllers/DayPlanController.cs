@@ -76,10 +76,13 @@ namespace server.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult CreateUser([FromBody] CreateDayPlanDto newDayPlan)
+        public IActionResult CreateDayPlan([FromBody] CreateDayPlanDto newDayPlan)
         {
             if (newDayPlan == null)
                 return BadRequest(ModelState);
+
+            if (!_repo.UserExists(newDayPlan.user_id))
+                return NotFound("User does not exist.");
 
             if (_repo.DayPlanExists(newDayPlan.id))
             {
@@ -99,6 +102,56 @@ namespace server.Controllers
             }
 
             return Ok("Day plan successfully created!");
+        }
+
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateDayPlan(Guid id, [FromBody] DayPlan updatedDayPlan)
+        {
+            if (updatedDayPlan == null)
+                return BadRequest("No new data added.");
+
+            if (!_repo.DayPlanExists(id))
+                return NotFound("DayPlan does not exist.");
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var dayPlanMap = _mapper.Map<DayPlan>(updatedDayPlan);
+
+            if (!_repo.UpdateDayPlan(id, dayPlanMap))
+            {
+                ModelState.AddModelError("", "Something went wrong updating the day plan.");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteDayPlan(Guid id)
+        {
+            if (!_repo.DayPlanExists(id))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var dayPlanToDelete = _repo.GetDayPlan(id);
+
+            if (!_repo.DeleteDayPlan(dayPlanToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong deleting the day plan.");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
         }
     }
 }

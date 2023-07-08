@@ -29,7 +29,7 @@ namespace server.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<GetUserDto>))]
         public IActionResult GetUsers()
         {
-            var users = _mapper.Map<GetUserDto>(_repo.GetUsers());
+            var users = _mapper.Map<List<GetUserDto>>(_repo.GetUsers());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -137,7 +137,7 @@ namespace server.Controllers
 
             var userMap = _mapper.Map<User>(updatedUser);
 
-            if (!_repo.UpdateUser(updatedUser))
+            if (!_repo.UpdateUser(userMap))
             {
                 ModelState.AddModelError("", "Something went wrong updating the user.");
                 return StatusCode(500, ModelState);

@@ -10,7 +10,7 @@ namespace server.Interface
     {
         ICollection<DayPlan> GetDayPlans(Guid user_id);
         bool CreateDayPlan(DayPlan dayPlan);
-        bool UpdateDayPlan(DayPlan dayPlan);
+        bool UpdateDayPlan(Guid id, DayPlan dayPlan);
         bool DeleteDayPlan(DayPlan dayPlan);
         DayPlan? GetDayPlan(Guid id);
         bool DayPlanExists(Guid id);
