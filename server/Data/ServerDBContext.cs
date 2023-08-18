@@ -22,6 +22,7 @@ namespace server.Data
         {
 
             modelBuilder.Entity<User>().Navigation(u => u.day_plans).AutoInclude();
+            modelBuilder.Entity<DayPlan>().Navigation(dp => dp.tasks).AutoInclude();
 
 
             base.OnModelCreating(modelBuilder);

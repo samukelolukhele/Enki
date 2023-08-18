@@ -59,15 +59,15 @@ namespace server.Controllers
 
         [HttpGet("tasks/{id}")]
         [ProducesResponseType(200, Type = typeof(TaskDto))]
-        public IActionResult GetTasksByDayPlan(Guid day_plan_id)
+        public IActionResult GetTasksByDayPlan(Guid id)
         {
-            if (!_repo.DayPlanExists(day_plan_id))
+            if (!_repo.DayPlanExists(id))
                 return NotFound();
 
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var tasks = _mapper.Map<List<TaskDto>>(_repo.GetTasksByDayPlan(day_plan_id));
+            var tasks = _mapper.Map<List<TaskDto>>(_repo.GetTasksByDayPlan(id));
 
             return Ok(tasks);
         }
@@ -86,7 +86,7 @@ namespace server.Controllers
 
             if (_repo.DayPlanExists(newDayPlan.id))
             {
-                ModelState.AddModelError("", "User already exists");
+                ModelState.AddModelError("", "Day plan already exists");
                 return StatusCode(422, ModelState);
             }
 
@@ -111,18 +111,22 @@ namespace server.Controllers
         [ProducesResponseType(404)]
         public IActionResult UpdateDayPlan(Guid id, [FromBody] DayPlan updatedDayPlan)
         {
+
             if (updatedDayPlan == null)
                 return BadRequest("No new data added.");
 
             if (!_repo.DayPlanExists(id))
                 return NotFound("DayPlan does not exist.");
 
+            updatedDayPlan.id = id;
+            updatedDayPlan.updated_at = DateTime.UtcNow;
+
             if (!ModelState.IsValid)
                 return BadRequest();
 
             var dayPlanMap = _mapper.Map<DayPlan>(updatedDayPlan);
 
-            if (!_repo.UpdateDayPlan(id, dayPlanMap))
+            if (!_repo.UpdateDayPlan(dayPlanMap))
             {
                 ModelState.AddModelError("", "Something went wrong updating the day plan.");
                 return StatusCode(500, ModelState);

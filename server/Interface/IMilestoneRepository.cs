@@ -12,5 +12,8 @@ namespace server.Interface
         Milestone? GetMilestone(Guid id);
         bool MilestoneExists(Guid id);
         bool TaskExists(Guid task_id);
+        bool CreateMilestone(Milestone milestone);
+        bool UpdateMilestone(Guid id, Milestone milestone);
+        bool DeleteMilestone(Milestone milestone);
     }
 }

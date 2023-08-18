@@ -5,35 +5,53 @@ using System.Threading.Tasks;
 using server.Data;
 using server.Interface;
 using server.Model;
+using server.Utils;
 
 namespace server.Repository
 {
     public class MilestoneRepository : IMilestoneRepository
     {
         private readonly ServerDBContext _context;
-        public MilestoneRepository(ServerDBContext _context)
+        private readonly IUtilRepository _util;
+        public MilestoneRepository(ServerDBContext _context, IUtilRepository _util)
         {
+            this._util = _util;
             this._context = _context;
 
         }
 
         public ICollection<Milestone> GetMilestones(Guid task_id)
         {
-            return _context.Milestones.Where(m => m.task_id == task_id).ToList();
+            return _util.GetList<Milestone>(m => m.task_id == task_id);
         }
 
         public Milestone? GetMilestone(Guid id)
         {
-            return _context.Milestones.Where(m => m.id == id).FirstOrDefault();
+            return _util.Get<Milestone>(m => m.id == id);
         }
 
         public bool MilestoneExists(Guid id)
         {
-            return _context.Milestones.Any(m => m.id == id);
+            return _util.DoesExist<Milestone>(m => m.id == id);
         }
         public bool TaskExists(Guid id)
         {
-            return _context.Tasks.Any(t => t.id == id);
+            return _util.DoesExist<Model.Task>(t => t.id == id);
+        }
+
+        public bool CreateMilestone(Milestone milestone)
+        {
+            return _util.Create<Milestone>(milestone);
+        }
+
+        public bool UpdateMilestone(Guid id, Milestone milestone)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteMilestone(Milestone milestone)
+        {
+            return _util.Delete<Milestone>(milestone);
         }
     }
 }

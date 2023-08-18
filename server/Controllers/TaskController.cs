@@ -48,7 +48,7 @@ namespace server.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetTasks(Guid day_plan_id)
         {
-            return GetTaskDataValidation<List<TaskDto>>(day_plan_id, _repo.GetTasks(day_plan_id), _repo.TaskExists(day_plan_id));
+            return GetTaskDataValidation<List<TaskDto>>(day_plan_id, _repo.GetTasks(day_plan_id), _repo.DayPlanExists(day_plan_id));
         }
 
         [HttpGet("id/{id}")]
@@ -56,7 +56,7 @@ namespace server.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetTask(Guid id)
         {
-            return GetTaskDataValidation<TaskDto>(id, _repo.GetTask(id), _repo.TaskExists(id));
+            return GetTaskDataValidation<Model.Task>(id, _repo.GetTask(id), _repo.TaskExists(id));
         }
 
         [HttpGet("milestones/{task_id}")]
@@ -68,5 +68,86 @@ namespace server.Controllers
 
         }
 
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult CreateTask([FromBody] CreateTaskDto newTask)
+        {
+            if (newTask == null)
+                return BadRequest(ModelState);
+
+            if (!_repo.DayPlanExists(newTask.day_plan_id))
+                return NotFound("Day plan does not exist.");
+
+            if (_repo.TaskExists(newTask.id))
+            {
+                ModelState.AddModelError("", "Task already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var taskMap = _mapper.Map<Model.Task>(newTask);
+
+            if (!_repo.CreateTask(taskMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving the day plan");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(taskMap);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateTask(Guid id, [FromBody] Model.Task updatedTask)
+        {
+            if (updatedTask == null)
+                return BadRequest("No new data added");
+
+            if (!_repo.TaskExists(id))
+                return NotFound("Task does not exist");
+
+            updatedTask.id = id;
+            updatedTask.updated_at = DateTime.UtcNow;
+
+            var taskMap = _mapper.Map<Model.Task>(updatedTask);
+
+            if (!_repo.UpdateTask(taskMap))
+            {
+                ModelState.AddModelError("", "Something went wrong with updating the task.");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteTask(Guid id)
+        {
+            if(!_repo.TaskExists(id))
+                return NotFound();
+            
+            if(!ModelState.IsValid)
+            return BadRequest();
+
+            var taskToDelete = _repo.GetTask(id);
+
+            if(!_repo.DeleteTask(taskToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong deleting the task");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
     }
 }

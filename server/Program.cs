@@ -4,11 +4,13 @@ using server.Interface;
 using server.Repository;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using server.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
+builder.Services.AddTransient<IUtilRepository, UtilRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IDayPlanRepository, DayPlanRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();

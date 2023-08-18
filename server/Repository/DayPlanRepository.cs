@@ -5,66 +5,59 @@ using System.Threading.Tasks;
 using server.Data;
 using server.Interface;
 using server.Model;
+using server.Utils;
 
 namespace server.Repository
 {
+
+    //!DELETE AFTER TESTING API cc14abc0-13d2-4136-91de-fcddad6c175b
     public class DayPlanRepository : IDayPlanRepository
     {
         private readonly ServerDBContext _context;
-        public DayPlanRepository(ServerDBContext _context)
+        private readonly IUtilRepository _util;
+        public DayPlanRepository(ServerDBContext _context, IUtilRepository _util)
         {
+            this._util = _util;
             this._context = _context;
 
         }
 
         public ICollection<DayPlan> GetDayPlans(Guid user_id)
         {
-            return _context.DayPlans.Where(dp => dp.user_id == user_id).ToList();
+            return _util.GetList<DayPlan>(dp => dp.user_id == user_id);
         }
 
         public DayPlan? GetDayPlan(Guid id)
         {
-            return _context.DayPlans.Where(dp => dp.id == id).FirstOrDefault();
+            return _util.Get<DayPlan>(dp => dp.id == id);
         }
 
         public bool DayPlanExists(Guid id)
         {
-            return _context.DayPlans.Any(dp => dp.id == id);
+            return _util.DoesExist<DayPlan>(dp => dp.id == id);
         }
 
         public bool UserExists(Guid user_id)
         {
-            return _context.Users.Any(u => u.id == user_id);
+            return _util.DoesExist<User>(u => u.id == user_id);
         }
         public ICollection<Model.Task> GetTasksByDayPlan(Guid day_plan_id)
         {
-            return _context.Tasks.Where(t => t.day_plan_id == day_plan_id).ToList();
+            return _util.GetList<Model.Task>(t => t.day_plan_id == day_plan_id).ToList();
         }
 
         public bool CreateDayPlan(DayPlan dayPlan)
         {
-            dayPlan.id = Guid.NewGuid();
-            _context.DayPlans.Add(dayPlan);
-            return Save();
+            return _util.Create<DayPlan>(dayPlan);
         }
-        public bool UpdateDayPlan(Guid id, DayPlan dayPlan)
+        public bool UpdateDayPlan(DayPlan dayPlan)
         {
-            var exist = _context.DayPlans.Where(dp => dp.id == id).FirstOrDefault();
-
-            if (exist == null)
-                return false;
-
-            exist.title = dayPlan.title;
-            exist.description = dayPlan.description;
-            exist.updated_at = DateTime.UtcNow;
-
-            return Save();
+            return _util.Update<DayPlan>(dayPlan, dp => dp.user_id, dp => dp.id, dp => dp.created_at);
         }
 
         public bool DeleteDayPlan(DayPlan dayPlan)
         {
-            _context.DayPlans.Remove(dayPlan);
-            return Save();
+            return _util.Delete<DayPlan>(dayPlan);
         }
 
         public bool Save()
