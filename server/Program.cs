@@ -5,10 +5,10 @@ using server.Repository;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using server.Utils;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddTransient<IUtilRepository, UtilRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -19,6 +19,21 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthentication(
+    JwtBearerDefaults.AuthenticationScheme
+    ).AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)
+            ),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+builder.Services.AddAuthorization();
 builder.Services.AddDbContext<ServerDBContext>(options => options.UseNpgsql(
     builder.Configuration.GetConnectionString("DefaultConnection")
 ));
@@ -35,7 +50,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// app.UseAuthentication();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
