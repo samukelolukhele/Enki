@@ -19,6 +19,7 @@ namespace server.Helper
             CreateMap<Model.Task, TaskDto>();
             CreateMap<CreateTaskDto, Model.Task>();
             CreateMap<Milestone, MilestoneDto>();
+            CreateMap<CreateMilestoneDto, Milestone>();
         }
     }
 }

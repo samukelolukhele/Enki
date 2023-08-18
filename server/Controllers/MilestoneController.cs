@@ -10,6 +10,8 @@ using AutoMapper;
 
 namespace server.Controllers
 {
+
+    //!5d8e04e1-d8cb-4258-ad02-e239e142774d
     [ApiController]
     [Route("api/[controller]")]
     public class MilestoneController : ControllerBase
@@ -54,5 +56,88 @@ namespace server.Controllers
         {
             return GetMilestoneDataValidator<MilestoneDto>(id, _repo.GetMilestone(id), _repo.MilestoneExists(id));
         }
+
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult CreateMilestone([FromBody] CreateMilestoneDto newMilestone)
+        {
+            if (newMilestone == null)
+                return BadRequest(ModelState);
+
+            if (!_repo.TaskExists(newMilestone.task_id))
+                return NotFound("Task does not exist.");
+
+            if (_repo.MilestoneExists(newMilestone.id))
+            {
+                ModelState.AddModelError("", "Milestone already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var MilestoneMap = _mapper.Map<Milestone>(newMilestone);
+
+            if (!_repo.CreateMilestone(MilestoneMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving the mileston");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Milestone successfully created!");
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult U(Guid id, [FromBody] Milestone updatedMilestone)
+        {
+            if (updatedMilestone == null)
+                return BadRequest("No new data added.");
+
+            if (!_repo.MilestoneExists(id))
+                return NotFound();
+
+            var milestoneMap = _mapper.Map<Milestone>(updatedMilestone);
+
+            if (!_repo.UpdateMilestone(id, milestoneMap))
+            {
+                ModelState.AddModelError("", "Something went wrong updating the milestone.");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteTask(Guid id)
+        {
+            if (!_repo.MilestoneExists(id))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var milestoneToDelete = _repo.GetMilestone(id);
+
+            if (milestoneToDelete == null)
+                return NotFound();
+
+            if (!_repo.DeleteMilestone(milestoneToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong deleting the milestone.");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
+
     }
 }

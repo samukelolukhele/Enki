@@ -69,7 +69,7 @@ namespace server.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public IActionResult CreateTask([FromBody] CreateTaskDto newTask)
@@ -133,15 +133,18 @@ namespace server.Controllers
         [ProducesResponseType(404)]
         public IActionResult DeleteTask(Guid id)
         {
-            if(!_repo.TaskExists(id))
+            if (!_repo.TaskExists(id))
                 return NotFound();
-            
-            if(!ModelState.IsValid)
-            return BadRequest();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
 
             var taskToDelete = _repo.GetTask(id);
 
-            if(!_repo.DeleteTask(taskToDelete))
+            if (taskToDelete == null)
+                return NotFound();
+
+            if (!_repo.DeleteTask(taskToDelete))
             {
                 ModelState.AddModelError("", "Something went wrong deleting the task");
                 return StatusCode(500, ModelState);

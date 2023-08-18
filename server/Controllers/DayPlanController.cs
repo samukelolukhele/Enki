@@ -73,7 +73,7 @@ namespace server.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public IActionResult CreateDayPlan([FromBody] CreateDayPlanDto newDayPlan)
@@ -148,6 +148,9 @@ namespace server.Controllers
                 return BadRequest();
 
             var dayPlanToDelete = _repo.GetDayPlan(id);
+
+            if (dayPlanToDelete == null)
+                return NotFound();
 
             if (!_repo.DeleteDayPlan(dayPlanToDelete))
             {

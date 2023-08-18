@@ -46,7 +46,8 @@ namespace server.Repository
 
         public bool UpdateMilestone(Guid id, Milestone milestone)
         {
-            throw new NotImplementedException();
+            milestone.id = id;
+            return _util.Update(milestone, m => m.id, m => m.task_id, m => m.created_at);
         }
 
         public bool DeleteMilestone(Milestone milestone)
