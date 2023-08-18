@@ -39,6 +39,7 @@ namespace server.Controllers
             return Ok(users);
         }
 
+        [Authorize]
         [HttpGet("email/{email}")]
         [ProducesResponseType(200, Type = typeof(GetUserDto))]
         [ProducesResponseType(400)]
@@ -58,6 +59,7 @@ namespace server.Controllers
             return Ok(user);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(GetUserDto))]
         [ProducesResponseType(400)]
@@ -74,6 +76,7 @@ namespace server.Controllers
             return Ok(user);
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -106,6 +109,7 @@ namespace server.Controllers
             return Ok(token);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
@@ -121,6 +125,7 @@ namespace server.Controllers
             return Ok(token);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -148,6 +153,7 @@ namespace server.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

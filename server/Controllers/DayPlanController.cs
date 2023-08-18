@@ -8,6 +8,7 @@ using server.Repository;
 using server.Interface;
 using server.Model;
 using server.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers
 {
@@ -24,6 +25,7 @@ namespace server.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("{user_id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<DayPlanDto>))]
         [ProducesResponseType(400)]
@@ -40,6 +42,7 @@ namespace server.Controllers
             return Ok(dayPlans);
         }
 
+        [Authorize]
         [HttpGet("id/{id}")]
         [ProducesResponseType(200, Type = typeof(DayPlanDto))]
         [ProducesResponseType(400)]
@@ -57,6 +60,7 @@ namespace server.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("tasks/{id}")]
         [ProducesResponseType(200, Type = typeof(TaskDto))]
         public IActionResult GetTasksByDayPlan(Guid id)
@@ -72,6 +76,7 @@ namespace server.Controllers
             return Ok(tasks);
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -105,6 +110,7 @@ namespace server.Controllers
         }
 
 
+        [Authorize]
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -135,6 +141,7 @@ namespace server.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

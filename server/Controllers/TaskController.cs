@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using server.Interface;
 using server.Model;
 using server.Dto;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers
 {
@@ -42,7 +42,7 @@ namespace server.Controllers
             return Ok(tasks);
         }
 
-
+        [Authorize]
         [HttpGet("{day_plan_id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<TaskDto>))]
         [ProducesResponseType(400)]
@@ -51,6 +51,7 @@ namespace server.Controllers
             return GetTaskDataValidation<List<TaskDto>>(day_plan_id, _repo.GetTasks(day_plan_id), _repo.DayPlanExists(day_plan_id));
         }
 
+        [Authorize]
         [HttpGet("id/{id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<TaskDto>))]
         [ProducesResponseType(400)]
@@ -59,6 +60,7 @@ namespace server.Controllers
             return GetTaskDataValidation<Model.Task>(id, _repo.GetTask(id), _repo.TaskExists(id));
         }
 
+        [Authorize]
         [HttpGet("milestones/{task_id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<TaskDto>))]
         [ProducesResponseType(400)]
@@ -68,6 +70,7 @@ namespace server.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -100,6 +103,7 @@ namespace server.Controllers
             return Ok(taskMap);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -127,6 +131,7 @@ namespace server.Controllers
 
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

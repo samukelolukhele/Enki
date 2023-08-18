@@ -7,6 +7,7 @@ using server.Interface;
 using server.Model;
 using server.Dto;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers
 {
@@ -41,6 +42,7 @@ namespace server.Controllers
             return Ok(milestones);
         }
 
+        [Authorize]
         [HttpGet("{task_id}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<MilestoneDto>))]
         [ProducesResponseType(400)]
@@ -49,6 +51,7 @@ namespace server.Controllers
             return GetMilestoneDataValidator<List<MilestoneDto>>(task_id, _repo.GetMilestones(task_id), _repo.TaskExists(task_id));
         }
 
+        [Authorize]
         [HttpGet("id/{id}")]
         [ProducesResponseType(200, Type = typeof(MilestoneDto))]
         [ProducesResponseType(400)]
@@ -57,6 +60,7 @@ namespace server.Controllers
             return GetMilestoneDataValidator<MilestoneDto>(id, _repo.GetMilestone(id), _repo.MilestoneExists(id));
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -89,6 +93,7 @@ namespace server.Controllers
             return Ok("Milestone successfully created!");
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -113,6 +118,7 @@ namespace server.Controllers
 
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
