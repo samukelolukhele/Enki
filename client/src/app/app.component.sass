@@ -1,4 +1,4 @@
-$main-color: #141B41
+$main-color: #040403
 $secondary-color: #306BAC
 $tetiary-color: #6F9CEB
 $highlight-color: #59D2FE
@@ -9,6 +9,19 @@ $highlight-color: #59D2FE
     margin: 0 auto
     padding: 0 40px
 
+
+.h-full
+    height: 100%
+
+.w-full
+    width: 100%
+
+.btns
+    display: flex
+    justify-content: center
+    align-items: center
+    gap: 20px
+    
 
 
 .home-gradient-bg
@@ -28,9 +41,13 @@ $highlight-color: #59D2FE
 @mixin flex($flex-layout, $flex-direction)
     display: flex
 
-    @if($flex-direction == "between", "evenly")
+    @if($flex-layout == "between" or $flex-layout == "evenly" and $flex-direction == "column")
         justify-content: space-#{$flex-layout}
         align-items: center
+        flex-direction: $flex-direction
+    @else if($flex-layout == "between" or $flex-layout == "evenly" and $flex-direction == "row")
+        justify-content: center
+        align-items: space-#{$flex-layout}
         flex-direction: $flex-direction
     @else
         justify-content: $flex-layout
