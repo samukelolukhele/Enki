@@ -1,4 +1,64 @@
+$main-color: #141B41
+$secondary-color: #306BAC
+$tetiary-color: #6F9CEB
+$highlight-color: #59D2FE
+
+    
 .container
     max-width: 1200px
     margin: 0 auto
     padding: 0 40px
+
+
+
+.home-gradient-bg
+    background-image: linear-gradient(to bottom, #141b41, #1b2854, #223767, #28457b, #2c5590, #2f64a1, #3174b2, #3384c3, #3897d3, #3fabe2, #4bbef0, #59d2fe)
+
+//* Mixins
+@mixin spacing($prefix, $property)
+    $sizes: [0, .25, .5, 1, 1.5, 2, 3, 4, 5]
+    $spacing: 1rem
+
+    @for $i from 1 through length($sizes)
+        $size: nth($sizes, $i)
+
+        .#{$prefix}-#{$i - 1}
+            #{$property}: $spacing * $size
+
+@mixin flex($flex-layout, $flex-direction)
+    display: flex
+
+    @if($flex-direction == "between", "evenly")
+        justify-content: space-#{$flex-layout}
+        align-items: center
+        flex-direction: $flex-direction
+    @else
+        justify-content: $flex-layout
+        align-items: $flex-layout
+        flex-direction: $flex-direction
+
+
+//*Breakpoint mixins
+
+
+$sizes: ("xs": 479px, "sm": 480px, "md": 720px, "lg": 960px, "xl": 1140px)
+
+@mixin xs
+    @media (max-width: map-get($sizes, "xs"))
+        @content
+
+@mixin sm
+    @media (max-width: map-get($sizes, "sm"))
+        @content
+
+@mixin md
+    @media (max-width: map-get($sizes, "md"))
+        @content  
+
+@mixin lg
+    @media (max-width: map-get($sizes, "lg"))
+        @content  
+
+@mixin xl
+    @media (max-width: map-get($sizes, "xl"))
+        @content    
