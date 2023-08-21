@@ -4,23 +4,37 @@
     [formGroup]="loginForm"
     novalidate
     autocomplete="false"
+    class="form-gradient-bg"
   >
-    <label for="email">Email</label>
-    <input
-      type="email"
-      placeholder="Enter your email"
-      formControlName="email"
-      name="email"
-      id="email"
-    />
-    <label for="password">Password</label>
-    <input
-      formControlName="password"
-      type="password"
-      name="password"
-      id="password"
-      placeholder="Enter your password"
-    />
-    <input class="btn primary" type="submit" />
+    <div class="text">
+      <h1 class="logo">Enki.</h1>
+    </div>
+    <div class="inputs">
+      <div class="input">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          formControlName="email"
+          name="email"
+          id="email"
+        />
+      </div>
+      <div class="input">
+        <label for="password">Password</label>
+        <input
+          formControlName="password"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter your password"
+        />
+      </div>
+      <input class="btn primary" type="submit" value="Login" />
+    </div>
+    <p>
+      Don't have an account?
+      <a class="form-redirect" href="/register">Register here.</a>
+    </p>
   </form>
 </div>

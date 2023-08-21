@@ -1,6 +1,7 @@
-$main-color: #040403
-$secondary-color: #306BAC
-$tetiary-color: #6F9CEB
+$bg-color: #040403
+$brand-color: #6200B3
+$secondary-color: #15a0bb
+$tetiary-color: #162521
 $highlight-color: #59D2FE
 
 .app
@@ -30,10 +31,11 @@ a
     gap: 20px
     
 
+.form-gradient-bg
+     background-image: linear-gradient(to left, #040403, #060604, #080806, #0a0a07, #0c0c08, #0f100d, #121311, #141614, #181b1a, #1b2020, #1f2626, #242b2d)
 
 .home-gradient-bg
-    background-image: linear-gradient(to bottom, #141b41, #1b2854, #223767, #28457b, #2c5590, #2f64a1, #3174b2, #3384c3, #3897d3, #3fabe2, #4bbef0, #59d2fe)
-
+     background-image: linear-gradient(to left, #6200b3, #3844cc, #0065da, #0080df, #0097dd, #00a3df, #00aede, #29b9dd, #37bfe5, #43c5ed, #4eccf6, #59d2fe)
 //* Mixins
 @mixin spacing($prefix, $property)
     $sizes: [0, .25, .5, 1, 1.5, 2, 3, 4, 5]

@@ -4,7 +4,7 @@
     height: 90vh
     width: 100%
     color: white
-    background: main.$main-color
+    background: main.$bg-color
     font-size: 2rem
 
     @include main.sm
@@ -25,13 +25,16 @@
             h1
                 font-weight: 900
                 color: transparent
-                background: linear-gradient(to left, #141b41, #1b2854, #223767, #28457b, #2c5590, #2f64a1, #3174b2, #3384c3, #3897d3, #3fabe2, #4bbef0, #59d2fe)
                 background-clip: text
-
-
+                background-image: linear-gradient(to right, #6200b3, #7117c1, #8027cf, #8e36de, #9d43ec, #9f46ed, #a248ee, #a44bef, #9a44e3, #913dd8, #8735cc, #7e2ec1)
 
             p
                 font-weight: 200
+
+            hr
+                border: 1px dashed main.$brand-color
+                width: 30%
+                margin: 0 auto
 
        
         
