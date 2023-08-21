@@ -3,18 +3,21 @@ import { FormGroup } from '@angular/forms';
 const VALIDATION_MESSAGES = {
   email: {
     required: 'Required',
-    email: 'This email is invalid',
+    email: 'This email is invalid.',
   },
   password: {
     required: 'Required',
-    minlength: 'The password length must be greater than or equal to 8',
+    minlength: 'The password length must be greater than or equal to 8.',
   },
   confirmPassword: {
     required: 'Required',
-    match: 'Password does not match',
+    match: 'Password does not match.',
   },
-  name: {
-    required: 'Required',
+  fName: {
+    required: 'Required.',
+  },
+  lName: {
+    required: 'Required.',
   },
 };
 

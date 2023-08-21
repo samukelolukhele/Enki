@@ -4,7 +4,7 @@
     [formGroup]="loginForm"
     novalidate
     autocomplete="false"
-    class="form-gradient-bg"
+    class="form-gradient-bg shadow"
   >
     <div class="text">
       <h1 class="logo">Enki.</h1>
@@ -19,6 +19,9 @@
           name="email"
           id="email"
         />
+        <p *ngIf="displayMessages['email']" class="danger">
+          {{ displayMessages["email"] }}
+        </p>
       </div>
       <div class="input">
         <label for="password">Password</label>
@@ -29,12 +32,15 @@
           id="password"
           placeholder="Enter your password"
         />
+        <p *ngIf="displayMessages['password']" class="danger">
+          {{ displayMessages["password"] }}
+        </p>
       </div>
       <input class="btn primary" type="submit" value="Login" />
     </div>
     <p>
       Don't have an account?
-      <a class="form-redirect" href="/register">Register here.</a>
+      <a class="highlighted-link" href="/register">Register here.</a>
     </p>
   </form>
 </div>

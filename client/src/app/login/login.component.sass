@@ -3,7 +3,8 @@
 .login
     @include main.flex(center, column)
     
-    height: 100vh
+    min-height: 100vh
+    padding: 100px 0
 
 form
     @include main.flex(center, column)
@@ -12,14 +13,34 @@ form
     width: fit-content
     min-height: 400px
     gap: 50px
+    max-width: 500px
+    
+    p
+        text-align: center 
+
+    hr
+        width: 100%
+        border: 1px solid white
+
+    .btn
+        margin-top: 30px
+
+
+    @include main.xs
+        width: 90%
 
 
     .inputs
         @include main.flex(center, column)
         gap: 20px
+        width: fit-content
 
         .input
             @include main.flex(center, column)
             align-items: flex-start 
-            gap: 10px           
+            gap: 10px 
+            width: 100%
+
+            input
+                width: 100%          
         

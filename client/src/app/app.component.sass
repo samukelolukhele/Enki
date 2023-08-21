@@ -3,12 +3,23 @@ $brand-color: #6200B3
 $secondary-color: #15a0bb
 $tetiary-color: #162521
 $highlight-color: #59D2FE
+$danger-color: #f44336
+$success-color: #388e3c
+$link-color: #0288d1
 
 .app
     min-height: 100vh
 
+
+.danger
+    color: $danger-color
+
+.success
+    color: $success-color
+
+
+
 a
-    transition: ease .6s
     &:hover
         color: $highlight-color
     
@@ -29,7 +40,15 @@ a
     justify-content: center
     align-items: center
     gap: 20px
+
+.shadow
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75)
+    -webkit-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75)
+    -moz-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75)
     
+.highlighted-link
+    color: $link-color
+    text-decoration: underline
 
 .form-gradient-bg
      background-image: linear-gradient(to left, #040403, #060604, #080806, #0a0a07, #0c0c08, #0f100d, #121311, #141614, #181b1a, #1b2020, #1f2626, #242b2d)
