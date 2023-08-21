@@ -1,1 +1,88 @@
-<p>register works!</p>
+<div class="login">
+  <form
+    (ngSubmit)="register()"
+    [formGroup]="registerForm"
+    novalidate
+    autocomplete="false"
+    class="form-gradient-bg shadow"
+  >
+    <div class="text">
+      <h1 class="logo">Enki.</h1>
+    </div>
+    <div class="inputs">
+      <div class="names">
+        <div class="input">
+          <label for="fName">First Name</label>
+          <input
+            type="fName"
+            placeholder="Enter your first name"
+            formControlName="fName"
+            name="fName"
+            id="fName"
+          />
+          <p *ngIf="displayMessages['fName']" class="danger">
+            {{ displayMessages["fName"] }}
+          </p>
+        </div>
+        <div class="input">
+          <label for="lName">Last Name</label>
+          <input
+            type="lName"
+            placeholder="Enter your last name"
+            formControlName="lName"
+            name="lName"
+            id="lName"
+          />
+          <p *ngIf="displayMessages['lName']" class="danger">
+            {{ displayMessages["lName"] }}
+          </p>
+        </div>
+      </div>
+      <div class="input">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          formControlName="email"
+          name="email"
+          id="email"
+        />
+        <p *ngIf="displayMessages['email']" class="danger">
+          {{ displayMessages["email"] }}
+        </p>
+      </div>
+      <div class="input">
+        <label for="password">Password</label>
+        <input
+          formControlName="password"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter your password"
+        />
+        <p *ngIf="displayMessages['password']" class="danger">
+          {{ displayMessages["password"] }}
+        </p>
+      </div>
+      <div class="input">
+        <label for="confirm_password">Confirm Password</label>
+        <input
+          formControlName="confirm_password"
+          type="password"
+          name="confirm_password"
+          id="confirm_password"
+          placeholder="Please confirm your password"
+        />
+        <p *ngIf="displayMessages['confirmPassword']" class="danger">
+          {{ displayMessages["confirmPassword"] }}
+        </p>
+      </div>
+      <hr />
+      <input class="btn primary" type="submit" value="Login" />
+    </div>
+    <p>
+      Already have an account?
+      <a class="highlighted-link" href="/register">Login here.</a>
+    </p>
+  </form>
+</div>

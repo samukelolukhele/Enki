@@ -1,0 +1,10 @@
+@use "../app.component" as main
+@use '../login/login.component'
+
+.names
+    @include main.flex(center, row)
+    gap: 20px
+
+    @include main.sm
+        @include main.flex(center, column)
+        
