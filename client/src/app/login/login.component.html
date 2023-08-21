@@ -1,1 +1,26 @@
-<p>login works!</p>
+<div class="login">
+  <form
+    (ngSubmit)="login()"
+    [formGroup]="loginForm"
+    novalidate
+    autocomplete="false"
+  >
+    <label for="email">Email</label>
+    <input
+      type="email"
+      placeholder="Enter your email"
+      formControlName="email"
+      name="email"
+      id="email"
+    />
+    <label for="password">Password</label>
+    <input
+      formControlName="password"
+      type="password"
+      name="password"
+      id="password"
+      placeholder="Enter your password"
+    />
+    <input class="btn primary" type="submit" />
+  </form>
+</div>
