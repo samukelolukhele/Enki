@@ -13,10 +13,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { GenericValidator } from '../shared/generic-validator';
-import { Observable, debounceTime, fromEvent, merge } from 'rxjs';
-import { GenericHttpClient } from '../shared/generic-http-client';
+import { Observable, debounceTime, fromEvent, merge, tap } from 'rxjs';
+import { GenericHttpService } from '../shared/services/http-service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { User } from '../types/User.type';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -31,13 +33,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
   displayMessages: { [key: string]: string } = {};
   private genericValidator: GenericValidator = new GenericValidator();
 
-  constructor(private fb: FormBuilder, private http: GenericHttpClient) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.genericValidator = new GenericValidator();
   }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
@@ -57,6 +63,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login() {
-    return this.http.getList<User>('User').subscribe((res) => console.log(res));
+    // if (this.loginForm.invalid) return;
+
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
+
+    this.authService.login(email, password);
   }
 }

@@ -106,23 +106,24 @@ namespace server.Controllers
 
             var token = _repo.CreateToken(userMap.email);
 
-            return Ok(token);
+            return Ok(Json(token));
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
-        public IActionResult Login(string username, string password)
+        public IActionResult Login([FromBody] LoginUserDto user)
         {
-            if (!_repo.UserExists(username))
+            if (!_repo.UserExists(user.email))
                 return Unauthorized("The email or password is incorrect.");
 
-            if (_repo.Login(username, password) == false)
+            if (_repo.Login(user.email, user.password) == false)
                 return Unauthorized("The email or password is incorrect.");
 
-            var token = _repo.CreateToken(username);
-            return Ok(token);
+            var token = _repo.CreateToken(user.email);
+
+            return Ok(Json(token));
         }
 
         [Authorize]

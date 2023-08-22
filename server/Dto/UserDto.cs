@@ -24,4 +24,11 @@ namespace server.Dto
         public DateTime created_at { get; set; } = DateTime.UtcNow;
         public DateTime updated_at { get; set; } = DateTime.UtcNow;
     }
+
+    public class LoginUserDto
+    {
+        public string email { get; set; } = null!;
+        public string password { get; set; } = null!;
+
+    }
 }
