@@ -14,6 +14,9 @@ import {
 } from '@angular/forms';
 import { GenericValidator } from '../shared/generic-validator';
 import { Observable, debounceTime, fromEvent, merge } from 'rxjs';
+import { GenericHttpClient } from '../shared/generic-http-client';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { User } from '../types/User.type';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +30,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   displayMessages: { [key: string]: string } = {};
   private genericValidator: GenericValidator = new GenericValidator();
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder, private http: GenericHttpClient) {
     this.genericValidator = new GenericValidator();
   }
 
@@ -53,6 +57,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login() {
-    console.log('---form', this.loginForm.value);
+    return this.http.getList<User>('User').subscribe((res) => console.log(res));
   }
 }

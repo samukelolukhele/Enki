@@ -26,7 +26,7 @@ namespace server.Controllers
             this._repo = _repo;
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<GetUserDto>))]
         public IActionResult GetUsers()
