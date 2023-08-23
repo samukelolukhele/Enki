@@ -14,6 +14,8 @@ import {
 import { PasswordMatcher } from '../shared/password-matcher';
 import { GenericValidator } from '../shared/generic-validator';
 import { Observable, debounceTime, fromEvent, merge } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +30,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   displayMessages: { [key: string]: string } = {};
   private genericValidator: GenericValidator = new GenericValidator();
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.genericValidator = new GenericValidator();
   }
 
@@ -52,7 +58,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     merge(this.registerForm.valueChanges, ...controlBlurs)
       .pipe(debounceTime(800))
-      .subscribe((value) => {
+      .subscribe(() => {
         this.displayMessages = this.genericValidator.processMessages(
           this.registerForm
         );
@@ -60,6 +66,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   register() {
-    console.log('---sign-up', this.registerForm.value);
+    if (this.registerForm.invalid) return;
+
+    this.authService
+      .register(this.registerForm.value)
+      .subscribe(() => this.router.navigate(['dashboard']));
   }
 }

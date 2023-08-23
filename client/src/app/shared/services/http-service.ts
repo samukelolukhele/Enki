@@ -44,13 +44,24 @@ export class GenericHttpService {
    * @param {string} requestRoute - Appends the request route with the value of this parameter.
    * @param {T} body - The body of the request
    * @param {Object} [headers] - The headers to be included in the request (optional).
-   * @return {*}  returns an Observable containing the result of the request. Use subscribe method to extract the response.
+   * @return {*} returns an Observable containing the result of the request. Use subscribe method to extract the response.
    * @memberof GenericHttpService
    */
   post<T>(requestRoute: string, body: T, headers?: Object): Observable<T> {
     return this.httpClient.post<T>(this.APIUrl + requestRoute, body, headers);
   }
 
+  /**
+   *
+   *
+   * @template T
+   * @param {string} requestRoute - Appends the request route with the value of this parameter.
+   * @param {string} id - The id of the entity to be updated.
+   * @param {T} body - The body of the request
+   * @param {Object} [headers]
+   * @return {*} returns an Observable containing the result of the request. Use subscribe method to extract the response.
+   * @memberof GenericHttpService
+   */
   put<T>(
     requestRoute: string,
     id: string,
@@ -66,6 +77,15 @@ export class GenericHttpService {
     );
   }
 
+  /**
+   *
+   *
+   * @template T
+   * @param {string} requestRoute - Appends the request route with the value of this parameter.
+   * @param {string} id - The id of the entity to be updated.
+   * @return {*} returns an Observable containing the result of the request. Use subscribe method to extract the response.
+   * @memberof GenericHttpService
+   */
   delete<T>(requestRoute: string, id: string) {
     let params = new HttpParams().set('id', id.toString());
 

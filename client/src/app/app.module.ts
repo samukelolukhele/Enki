@@ -13,9 +13,11 @@ import { FooterComponent } from './footer/footer.component';
 import { ButtonComponent } from './button/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+import { SideNavComponent } from './side-nav/side-nav.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     HomeComponent,
     DashboardComponent,
@@ -25,12 +27,18 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     FooterComponent,
     ButtonComponent,
-  ],
+      SideNavComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('token'),
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -63,11 +63,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login() {
-    // if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid) return;
 
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
 
-    this.authService.login(email, password);
+    this.authService
+      .login(email, password)
+      .subscribe(() => this.router.navigate(['dashboard']));
   }
 }

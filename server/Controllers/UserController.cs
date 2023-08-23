@@ -76,7 +76,7 @@ namespace server.Controllers
             return Ok(user);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
