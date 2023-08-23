@@ -1,0 +1,47 @@
+@use "../app.component" as main
+
+.side-nav
+    background: lighten(main.$brand-color, 0%)
+    height: 100%
+    padding: 25px 30px
+    min-width: 250px
+
+    @include main.sm
+        min-width: 0
+        padding: 25px 5px
+
+    .links
+        @include main.flex(column, center)
+        gap: 50px
+        align-items: flex-start
+        display: flex
+        flex-direction: column
+
+        @include main.sm
+            gap: 20px
+    
+        .link
+            width: 100%
+            @include main.flex(row, "flex-start")
+            gap: 10px
+            font-weight: 100
+            cursor: pointer
+
+            @include main.sm
+                padding: 10px 5px
+            .icon
+                font-size: 1.3rem
+
+                @include main.sm
+                    padding: 15px
+                    background: darken(main.$brand-color, 10%)
+                    border-radius: 5px
+
+            .text
+                @include main.flex(center, row)
+                font-size: 0.9rem
+                @include main.sm
+                    display: none
+            
+
+    
