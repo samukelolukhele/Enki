@@ -16,9 +16,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IsMobileDirective } from './shared/directives/isMobile.directive';
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     HomeComponent,
     DashboardComponent,
@@ -28,8 +29,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NavbarComponent,
     FooterComponent,
     ButtonComponent,
-      SideNavComponent
-   ],
+    SideNavComponent,
+    IsMobileDirective,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

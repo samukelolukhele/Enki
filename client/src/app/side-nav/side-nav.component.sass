@@ -5,11 +5,15 @@
     height: 100%
     padding: 25px 30px
     min-width: 250px
+    color: white
 
     @include main.sm
         min-width: 0
         padding: 25px 5px
 
+    .expanded
+        @include main.sm
+            margin: 0 15px
     .links
         @include main.flex(column, center)
         gap: 50px
@@ -19,6 +23,11 @@
 
         @include main.sm
             gap: 20px
+
+        .expandNav
+            > .expanded
+                font-weight: 900
+        
     
         .link
             width: 100%
@@ -37,11 +46,15 @@
                     background: darken(main.$brand-color, 10%)
                     border-radius: 5px
 
-            .text
+            > .text, .expanded
                 @include main.flex(center, row)
                 font-size: 0.9rem
                 @include main.sm
                     display: none
+
+            .expanded
+                
+                display: flex !important    
             
 
     

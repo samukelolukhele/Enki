@@ -1,17 +1,22 @@
 <div class="side-nav">
-  <div class="links">
+  <div class="links" [ngClass]="expanded ? 'expanded links' : 'links'">
+    <div *isMobile class="link expandNav" (click)="expandNav()">
+      <fa-icon *ngIf="!expanded" class="icon burger" [icon]="faBars"></fa-icon>
+      <fa-icon *ngIf="expanded" class="icon burger" [icon]="faClose"></fa-icon>
+      <span [ngClass]="expanded ? 'expanded' : 'text'">Close</span>
+    </div>
     <a class="link">
       <fa-icon class="icon" [icon]="faDashboard"></fa-icon>
-      <span class="text">Dashboard</span> </a
+      <span [ngClass]="expanded ? 'expanded' : 'text'">Dashboard</span> </a
     ><a class="link">
       <fa-icon class="icon" [icon]="faCalendar"></fa-icon>
-      <span class="text">Plans</span> </a
+      <span [ngClass]="expanded ? 'expanded' : 'text'">Plans</span> </a
     ><a class="link">
       <fa-icon class="icon" [icon]="faPen"></fa-icon>
-      <span class="text">Tasks</span> </a
+      <span [ngClass]="expanded ? 'expanded' : 'text'">Tasks</span> </a
     ><a class="link">
       <fa-icon class="icon" [icon]="faUser"></fa-icon>
-      <span class="text">Profile</span>
+      <span [ngClass]="expanded ? 'expanded' : 'text'">Profile</span>
     </a>
   </div>
 </div>
