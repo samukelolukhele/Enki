@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [	
@@ -39,6 +40,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
         tokenGetter: () => localStorage.getItem('token'),
       },
     }),
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
