@@ -19,6 +19,7 @@ import { HttpClient, HttpHandler } from '@angular/common/http';
 import { User } from '../types/User.type';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { SpinnerService } from '../shared/services/spinner/spinner.service';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    public spinnerService: SpinnerService
   ) {
     this.genericValidator = new GenericValidator();
   }

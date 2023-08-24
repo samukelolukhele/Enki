@@ -84,5 +84,6 @@
       Already have an account?
       <a class="highlighted-link" href="/register">Login here.</a>
     </p>
+    <app-spinner *ngIf="spinnerService.isLoading | async"></app-spinner>
   </form>
 </div>

@@ -12,11 +12,13 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { ButtonComponent } from './button/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IsMobileDirective } from './shared/directives/isMobile.directive';
+import { InterceptorService } from './shared/services/http-interceptors/http.interceptor.service';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { IsMobileDirective } from './shared/directives/isMobile.directive';
     ButtonComponent,
     SideNavComponent,
     IsMobileDirective,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,9 @@ import { IsMobileDirective } from './shared/directives/isMobile.directive';
     }),
     FontAwesomeModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

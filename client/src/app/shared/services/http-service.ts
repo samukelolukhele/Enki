@@ -8,7 +8,6 @@ import { Observable, map } from 'rxjs';
 })
 export class GenericHttpService {
   private readonly APIUrl = environment.apiUrl;
-
   constructor(protected httpClient: HttpClient) {}
 
   /**
