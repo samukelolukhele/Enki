@@ -18,7 +18,7 @@ namespace server.Interface
         bool UpdateUser(User user);
         bool DeleteUser(User user);
         bool Login(string username, string password);
-        string CreateToken(string email);
+        string CreateToken(Guid id);
         bool Save();
     }
 }

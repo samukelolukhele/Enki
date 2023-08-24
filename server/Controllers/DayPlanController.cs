@@ -39,7 +39,7 @@ namespace server.Controllers
 
             var dayPlans = _mapper.Map<List<DayPlanDto>>(_repo.GetDayPlans(user_id));
 
-            return Ok(dayPlans);
+            return Ok(Json(dayPlans));
         }
 
         [Authorize]
@@ -56,7 +56,7 @@ namespace server.Controllers
 
             var dayPlan = _mapper.Map<DayPlanDto>(_repo.GetDayPlan(id));
 
-            return Ok(dayPlan);
+            return Ok(Json(dayPlan));
 
         }
 

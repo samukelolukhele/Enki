@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environment/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
@@ -8,6 +8,9 @@ import { Observable, map } from 'rxjs';
 })
 export class GenericHttpService {
   private readonly APIUrl = environment.apiUrl;
+  private readonly AuthHeaders: HttpHeaders = new HttpHeaders({
+    Authorization: localStorage.getItem('token') || '',
+  });
   constructor(protected httpClient: HttpClient) {}
 
   /**
@@ -19,8 +22,10 @@ export class GenericHttpService {
    * @return returns an Observable array of requested data. Use subscribe method to extract the response.
    * @memberof GenericHttpClient
    */
-  getList<T>(requestRoute: string, headers?: Object): Observable<T[]> {
-    return this.httpClient.get<T[]>(this.APIUrl + requestRoute, headers);
+  getList<T>(requestRoute: string): Observable<T[]> {
+    return this.httpClient.get<T[]>(this.APIUrl + requestRoute, {
+      headers: this.AuthHeaders,
+    });
   }
 
   /**
@@ -32,8 +37,10 @@ export class GenericHttpService {
    * @return {*}  returns an Observable containing the response. Use subscribe method to extract the response.
    * @memberof GenericHttpClient
    */
-  get<T>(requestRoute: string, headers?: Object): Observable<T> {
-    return this.httpClient.get<T>(this.APIUrl + requestRoute, headers);
+  get<T>(requestRoute: string): Observable<T> {
+    return this.httpClient.get<T>(this.APIUrl + requestRoute, {
+      headers: this.AuthHeaders,
+    });
   }
 
   /**
@@ -46,8 +53,10 @@ export class GenericHttpService {
    * @return {*} returns an Observable containing the result of the request. Use subscribe method to extract the response.
    * @memberof GenericHttpService
    */
-  post<T>(requestRoute: string, body: T, headers?: Object): Observable<T> {
-    return this.httpClient.post<T>(this.APIUrl + requestRoute, body, headers);
+  post<T>(requestRoute: string, body: T): Observable<T> {
+    return this.httpClient.post<T>(this.APIUrl + requestRoute, body, {
+      headers: this.AuthHeaders,
+    });
   }
 
   /**

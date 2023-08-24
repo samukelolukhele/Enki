@@ -96,11 +96,11 @@ namespace server.Repository
             return saved > 0 ? true : false;
         }
 
-        public string CreateToken(string email)
+        public string CreateToken(Guid id)
         {
             List<Claim> claims = new List<Claim>
             {
-             new Claim(ClaimTypes.Name, email)
+             new Claim(ClaimTypes.NameIdentifier, id.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["AppSettings:Token"]));

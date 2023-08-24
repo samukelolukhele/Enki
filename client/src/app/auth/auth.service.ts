@@ -19,7 +19,8 @@ interface Register extends Login {
 })
 export class AuthService {
   private isLoggedIn = new BehaviorSubject<boolean>(false);
-  private token = localStorage.getItem('token');
+  public token: string = localStorage.getItem('token') || '';
+  public userId = new BehaviorSubject<string>('');
   constructor(
     private httpService: GenericHttpService,
     private jwtHelperService: JwtHelperService
@@ -31,10 +32,27 @@ export class AuthService {
     if (this.jwtHelperService.isTokenExpired(this.token)) {
       this.isLoggedIn.next(false);
       localStorage.removeItem('token');
-      this.token = null;
+      this.token = '';
     } else {
       return;
     }
+  }
+
+  saveUserData() {
+    const decodedToken = this.jwtHelperService.decodeToken(this.token);
+
+    if (
+      !decodedToken[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+      ]
+    )
+      return this.userId.next('');
+
+    return this.userId.next(
+      decodedToken[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+      ]
+    );
   }
 
   login(email: string, password: string): Observable<any> {
@@ -42,6 +60,7 @@ export class AuthService {
       tap((res: any) => {
         localStorage.setItem('token', `bearer ${res.value}`);
         this.isLoggedIn.next(true);
+        this.saveUserData();
       })
     );
   }
@@ -58,6 +77,7 @@ export class AuthService {
         tap((res: any) => {
           localStorage.setItem('token', `bearer ${res.value}`);
           this.isLoggedIn.next(true);
+          this.saveUserData();
         })
       );
   }

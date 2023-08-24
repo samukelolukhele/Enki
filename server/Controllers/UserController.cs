@@ -104,7 +104,7 @@ namespace server.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            var token = _repo.CreateToken(userMap.email);
+            var token = _repo.CreateToken(userMap.id);
 
             return Ok(Json(token));
         }
@@ -121,9 +121,17 @@ namespace server.Controllers
             if (_repo.Login(user.email, user.password) == false)
                 return Unauthorized("The email or password is incorrect.");
 
-            var token = _repo.CreateToken(user.email);
+            var loggedInUser = _repo.GetUser(user.email);
 
-            return Ok(Json(token));
+            if (loggedInUser == null)
+            {
+                ModelState.AddModelError("", "Something went wrong while getting the user");
+                return StatusCode(500, ModelState);
+            }
+
+            var token = _repo.CreateToken(loggedInUser.id);
+
+            return Ok(Json(token, loggedInUser));
         }
 
         [Authorize]

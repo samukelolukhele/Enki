@@ -27,6 +27,7 @@ namespace server.Dto
 
     public class LoginUserDto
     {
+        public Guid id { get; }
         public string email { get; set; } = null!;
         public string password { get; set; } = null!;
 
