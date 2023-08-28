@@ -1,7 +1,0 @@
-<div class="dashboard">
-  <app-side-nav></app-side-nav>
-  <div class="container">
-    <app-spinner *ngIf="spinnerService.isLoading | async"></app-spinner>
-    {{ dayPlans | json }}
-  </div>
-</div>

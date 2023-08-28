@@ -1,0 +1,26 @@
+@use "../../app.component" as main
+
+.dashboard
+    position: relative
+    min-height: 100vh
+    display: flex
+
+    .content
+        padding: 20px 40px
+        height: 100%
+        width: 100%
+        
+    .top-day-plan-section
+        @include main.flex(between, row)
+        width: 100%
+        gap: 10px
+
+        .top-day-plan
+            background-color: white
+            padding: 50px 30px
+            display: flex
+            flex-direction: column
+            align-items: center
+            justify-content: center
+            flex-grow: 1
+

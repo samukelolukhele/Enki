@@ -1,0 +1,12 @@
+<div class="dashboard">
+  <app-side-nav></app-side-nav>
+  <div class="content">
+    <app-spinner *ngIf="spinnerService.isLoading | async"></app-spinner>
+    <div class="top-day-plan-section">
+      <div *ngFor="let plan of dayPlans" class="top-day-plan">
+        <h1>{{ plan.title }}</h1>
+        <p>{{ plan.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

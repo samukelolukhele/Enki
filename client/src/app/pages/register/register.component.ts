@@ -11,12 +11,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { PasswordMatcher } from '../shared/password-matcher';
-import { GenericValidator } from '../shared/generic-validator';
+import { PasswordMatcher } from '../../shared/password-matcher';
+import { GenericValidator } from '../../shared/generic-validator';
 import { Observable, debounceTime, fromEvent, merge } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
-import { SpinnerService } from '../shared/services/spinner/spinner.service';
+import { SpinnerService } from '../../shared/services/spinner/spinner.service';
 
 @Component({
   selector: 'app-register',

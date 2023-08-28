@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using server.Repository;
 using server.Interface;
 using server.Model;
 using server.Dto;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers
@@ -39,7 +39,7 @@ namespace server.Controllers
 
             var dayPlans = _mapper.Map<List<DayPlanDto>>(_repo.GetDayPlans(user_id));
 
-            return Ok(Json(dayPlans));
+            return Ok(dayPlans);
         }
 
         [Authorize]
@@ -56,7 +56,7 @@ namespace server.Controllers
 
             var dayPlan = _mapper.Map<DayPlanDto>(_repo.GetDayPlan(id));
 
-            return Ok(Json(dayPlan));
+            return Ok(dayPlan);
 
         }
 

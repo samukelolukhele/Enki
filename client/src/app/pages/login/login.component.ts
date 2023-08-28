@@ -12,14 +12,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { GenericValidator } from '../shared/generic-validator';
+import { GenericValidator } from '../../shared/generic-validator';
 import { Observable, debounceTime, fromEvent, merge, tap } from 'rxjs';
-import { GenericHttpService } from '../shared/services/http-service';
+import { GenericHttpService } from '../../shared/services/http-service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { User } from '../types/User.type';
-import { AuthService } from '../auth/auth.service';
+import { User } from '../../types/User.type';
+import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
-import { SpinnerService } from '../shared/services/spinner/spinner.service';
+import { SpinnerService } from '../../shared/services/spinner/spinner.service';
 
 @Component({
   selector: 'app-login',

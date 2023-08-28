@@ -7,7 +7,7 @@ import {
   faBars,
   faClose,
 } from '@fortawesome/free-solid-svg-icons';
-import { IsMobileDirective } from '../shared/directives/isMobile.directive';
+import { IsMobileDirective } from '../../shared/directives/isMobile.directive';
 
 @Component({
   selector: 'app-side-nav',
@@ -22,7 +22,7 @@ export class SideNavComponent implements OnInit {
   faUser = faUser;
   faBars = faBars;
   faClose = faClose;
-  expanded = true;
+  expanded = false;
   constructor() {}
 
   ngOnInit() {}
