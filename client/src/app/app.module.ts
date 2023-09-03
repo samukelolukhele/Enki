@@ -7,7 +7,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
-import { FormComponent } from './form/form.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ButtonComponent } from './components/button/button.component';
@@ -19,6 +18,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IsMobileDirective } from './shared/directives/isMobile.directive';
 import { InterceptorService } from './shared/services/http-interceptors/http.interceptor.service';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './state/auth/auth.reducer';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,6 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
     DashboardComponent,
     RegisterComponent,
     LoginComponent,
-    FormComponent,
     NavbarComponent,
     FooterComponent,
     ButtonComponent,
@@ -46,6 +47,8 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
       },
     }),
     FontAwesomeModule,
+    StoreModule.forRoot({ auth: authReducer }, {}),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },

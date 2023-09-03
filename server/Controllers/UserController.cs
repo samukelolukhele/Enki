@@ -123,6 +123,7 @@ namespace server.Controllers
 
             var loggedInUser = _repo.GetUser(user.email);
 
+
             if (loggedInUser == null)
             {
                 ModelState.AddModelError("", "Something went wrong while getting the user");
@@ -131,7 +132,7 @@ namespace server.Controllers
 
             var token = _repo.CreateToken(loggedInUser.id);
 
-            return Ok(Json(token, loggedInUser));
+            return Ok(token);
         }
 
         [Authorize]
