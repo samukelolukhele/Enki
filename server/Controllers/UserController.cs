@@ -132,7 +132,7 @@ namespace server.Controllers
 
             var token = _repo.CreateToken(loggedInUser.id);
 
-            return Ok(token);
+            return Ok(Json(token));
         }
 
         [Authorize]

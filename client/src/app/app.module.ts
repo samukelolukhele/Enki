@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +21,8 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './state/auth/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './state/auth/auth.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { EffectsModule } from '@ngrx/effects';
     }),
     FontAwesomeModule,
     StoreModule.forRoot({ auth: authReducer }, {}),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },

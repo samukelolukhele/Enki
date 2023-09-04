@@ -65,15 +65,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    this.store.dispatch(
-      AuthActions.loginRequest({ credentials: { email, password } })
-    );
-    return this.httpService.post<Login>('User/login', { email, password }).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', `bearer ${res.value}`);
-        this.saveUser();
-      })
-    );
+    return this.httpService.post<Login>('User/login', { email, password });
   }
 
   register(user: Register): Observable<Register> {

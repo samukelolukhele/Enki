@@ -3,19 +3,22 @@ import { loginFailure, loginSuccess } from './auth.actions';
 
 export interface State {
   token: string | null;
+  isLoggedIn: boolean;
   loginError?: string;
 }
 
 export const initialState: State = {
   token: null,
+  isLoggedIn: false,
 };
 
 const _authReducer = createReducer(
   initialState,
-  on(loginSuccess, (state, { loginSuccessResponse }) => {
+  on(loginSuccess, (state, { successResponse }) => {
     return {
       ...state,
-      token: loginSuccessResponse.token,
+      token: successResponse.value,
+      isLoggedIn: true,
     };
   }),
   on(loginFailure, (state, { error }) => {
@@ -23,6 +26,7 @@ const _authReducer = createReducer(
       ...state,
       loginError: error,
       token: null,
+      isLoggedIn: false,
     };
   })
 );

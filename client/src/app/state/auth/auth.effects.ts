@@ -14,8 +14,8 @@ export class AuthEffects {
         this.authService
           .login(action.credentials.email, action.credentials.password)
           .pipe(
-            map((loginSuccessResponse) =>
-              AuthActions.loginSuccess({ loginSuccessResponse })
+            map((successResponse) =>
+              AuthActions.loginSuccess({ successResponse })
             )
           )
       ),
@@ -23,14 +23,18 @@ export class AuthEffects {
     );
   });
 
-  loginSuccess$ = createEffect(() => {
-    return this.action$.pipe(
-      ofType(AuthActions.loginSuccess),
-      tap(({ loginSuccessResponse }) => {
-        this.router.navigateByUrl('/dashboard');
-      })
-    );
-  });
+  loginSuccess$ = createEffect(
+    () => {
+      return this.action$.pipe(
+        ofType(AuthActions.loginSuccess),
+        tap(({ successResponse }) => {
+          localStorage.setItem('token', `bearer ${successResponse}`);
+          this.router.navigate(['dashboard']);
+        })
+      );
+    },
+    { dispatch: false }
+  );
 
   constructor(
     private action$: Actions,

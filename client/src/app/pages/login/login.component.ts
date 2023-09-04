@@ -20,6 +20,8 @@ import { User } from '../../types/User.type';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { SpinnerService } from '../../shared/services/spinner/spinner.service';
+import * as AuthActions from '../../state/auth/auth.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-login',
@@ -36,8 +38,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
+    private store: Store,
     public spinnerService: SpinnerService
   ) {
     this.genericValidator = new GenericValidator();
@@ -64,14 +65,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
       });
   }
 
-  login() {
+  async login() {
     if (this.loginForm.invalid) return;
 
-    const email = this.loginForm.get('email')?.value;
-    const password = this.loginForm.get('password')?.value;
+    const credentials = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value,
+    };
 
-    this.authService
-      .login(email, password)
-      .subscribe(() => this.router.navigate(['dashboard']));
+    this.store.dispatch(AuthActions.loginRequest({ credentials }));
   }
 }
