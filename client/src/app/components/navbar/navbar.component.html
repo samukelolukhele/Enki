@@ -1,9 +1,15 @@
 <nav>
   <div class="container">
     <a class="logo" href="/">Enki.</a>
-    <div class="links">
+    <div *ngIf="!isLoggedIn$" class="links">
+      <a href="/">Home</a>
       <a href="/login" class="link">Login</a>
       <a href="/register" class="link">Sign-Up</a>
+    </div>
+    <div *ngIf="isLoggedIn$" class="links">
+      <a href="/">Home</a>
+      <a href="/dashboard" class="link">Dashboard</a>
+      <a href="/register" class="link">My Profile</a>
     </div>
   </div>
 </nav>

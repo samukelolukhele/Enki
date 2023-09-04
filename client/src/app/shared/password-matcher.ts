@@ -1,15 +1,20 @@
 import { AbstractControl } from '@angular/forms';
 
-export class PasswordMatcher {
-  static match(control: AbstractControl): void | null {
-    const passwordControl = control.get('password');
-    const confirmPasswordControl = control.get('confirmPassword');
+export class CustomValidators {
+  static MatchingPasswords(control: AbstractControl) {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+    const currentErrors = control.get('confirmPassword')?.errors;
+    const confirmControl = control.get('confirmPassword');
 
-    if (passwordControl?.pristine || confirmPasswordControl?.pristine)
-      return null;
-
-    if (passwordControl?.value === confirmPasswordControl?.value) return null;
-
-    confirmPasswordControl?.setErrors({ match: true });
+    if (compare(password, confirmPassword)) {
+      confirmControl?.setErrors({ ...currentErrors, not_matching: true });
+    } else {
+      currentErrors && confirmControl?.setErrors(currentErrors);
+    }
   }
+}
+
+function compare(password: string, confirmPassword: string) {
+  return password !== confirmPassword && confirmPassword !== '';
 }

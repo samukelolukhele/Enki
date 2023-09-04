@@ -57,6 +57,7 @@ export class AuthEffects {
         ofType(AuthActions.registerSuccess),
         tap(({ successResponse }) => {
           localStorage.setItem('token', `bearer ${successResponse}`);
+          this.router.navigate(['dashboard']);
         })
       );
     },

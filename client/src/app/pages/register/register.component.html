@@ -20,9 +20,6 @@
             name="fName"
             id="fName"
           />
-          <p *ngIf="displayMessages['fName']" class="danger">
-            {{ displayMessages["fName"] }}
-          </p>
         </div>
         <div class="input">
           <label for="lName">Last Name</label>
@@ -33,9 +30,6 @@
             name="lName"
             id="lName"
           />
-          <p *ngIf="displayMessages['lName']" class="danger">
-            {{ displayMessages["lName"] }}
-          </p>
         </div>
       </div>
       <div class="input">
@@ -59,6 +53,7 @@
           name="password"
           id="password"
           placeholder="Enter your password"
+          ngClass=" form-control"
         />
         <p *ngIf="displayMessages['password']" class="danger">
           {{ displayMessages["password"] }}
@@ -67,7 +62,7 @@
       <div class="input">
         <label for="confirm_password">Confirm Password</label>
         <input
-          formControlName="confirm_password"
+          formControlName="confirmPassword"
           type="password"
           name="confirm_password"
           id="confirm_password"
@@ -76,9 +71,21 @@
         <p *ngIf="displayMessages['confirmPassword']" class="danger">
           {{ displayMessages["confirmPassword"] }}
         </p>
+        <p
+          *ngIf="registerForm.get('confirmPassword')?.hasError('not_matching')"
+          class="danger"
+        >
+          The passwords don't match!
+        </p>
       </div>
       <hr />
-      <input class="btn primary" type="submit" value="Register" />
+      <input
+        class="btn primary"
+        type="submit"
+        value="Register"
+        [disabled]="!registerForm.valid"
+        [ngStyle]="{ opacity: registerForm.valid ? '1' : '0.2' }"
+      />
     </div>
     <p>
       Already have an account?

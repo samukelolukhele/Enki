@@ -9,7 +9,7 @@ import {
 export interface State {
   token: string | null;
   isLoggedIn: boolean;
-  loginError?: string;
+  loginError?: string | null;
 }
 
 export const initialState: State = {
@@ -24,6 +24,7 @@ const _authReducer = createReducer(
       ...state,
       token: successResponse.value,
       isLoggedIn: true,
+      loginError: null,
     };
   }),
   on(loginFailure, (state, { error }) => {

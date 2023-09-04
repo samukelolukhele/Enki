@@ -11,7 +11,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { PasswordMatcher } from '../../shared/password-matcher';
 import { GenericValidator } from '../../shared/generic-validator';
 import { Observable, debounceTime, fromEvent, merge } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
@@ -19,6 +18,7 @@ import { Router } from '@angular/router';
 import { SpinnerService } from '../../shared/services/spinner/spinner.service';
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../../state/auth/auth.actions';
+import { CustomValidators } from 'src/app/shared/password-matcher';
 
 @Component({
   selector: 'app-register',
@@ -47,10 +47,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         fName: ['', [Validators.required]],
         lName: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength]],
-        confirm_password: ['', [Validators.required]],
+        password: [null, [Validators.required, Validators.minLength]],
+        confirmPassword: [null, [Validators.required]],
       },
-      { validator: PasswordMatcher.match }
+      { validator: CustomValidators.MatchingPasswords }
     );
   }
 
