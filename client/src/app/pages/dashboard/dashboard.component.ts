@@ -16,16 +16,7 @@ export class DashboardComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    this.httpService
-      .getList(
-        `DayPlan/${
-          this.authService.userId.value ||
-          '3b36ee63-2e1e-48d3-82a6-9e2fc6d41d57'
-        }`
-      )
-      .subscribe((res) => (this.dayPlans = res));
-  }
+  ngOnInit(): void {}
 
   getDayPlans(res: Response) {}
 }

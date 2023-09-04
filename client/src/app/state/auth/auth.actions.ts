@@ -22,7 +22,7 @@ export const loginFailure = createAction(
   props<{ error: string }>()
 );
 
-export const register = createAction(
+export const registerRequest = createAction(
   '[Auth] Register Request.',
   props<{ credentials: CreateUser }>()
 );

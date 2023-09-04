@@ -36,6 +36,33 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  registerRequest$ = createEffect(() => {
+    return this.action$.pipe(
+      ofType(AuthActions.registerRequest),
+      exhaustMap((action) =>
+        this.authService
+          .register(action.credentials)
+          .pipe(
+            map((successResponse) =>
+              AuthActions.registerSuccess({ successResponse })
+            )
+          )
+      )
+    );
+  });
+
+  registerSuccess = createEffect(
+    () => {
+      return this.action$.pipe(
+        ofType(AuthActions.registerSuccess),
+        tap(({ successResponse }) => {
+          localStorage.setItem('token', `bearer ${successResponse}`);
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   constructor(
     private action$: Actions,
     private authService: AuthService,

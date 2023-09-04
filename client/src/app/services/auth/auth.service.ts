@@ -42,10 +42,8 @@ export class AuthService {
     return false;
   }
 
-  saveUser() {
-    const decodedToken = this.jwtHelperService.decodeToken(
-      localStorage.getItem('token') || ''
-    );
+  saveUser(token: string) {
+    const decodedToken = this.jwtHelperService.decodeToken(token);
 
     if (
       !decodedToken[
@@ -68,20 +66,8 @@ export class AuthService {
     return this.httpService.post<Login>('User/login', { email, password });
   }
 
-  register(user: Register): Observable<Register> {
-    return this.httpService
-      .post<Register>('User', {
-        fName: user.fName,
-        lName: user.lName,
-        email: user.email,
-        password: user.password,
-      })
-      .pipe(
-        tap((res: any) => {
-          localStorage.setItem('token', `bearer ${res.value}`);
-          this.saveUser();
-        })
-      );
+  register(user: Register): Observable<any> {
+    return this.httpService.post<Register>('User', user);
   }
 
   logout() {

@@ -49,7 +49,6 @@ export class GenericHttpService {
    * @template T
    * @param {string} requestRoute - Appends the request route with the value of this parameter.
    * @param {T} body - The body of the request
-   * @param {Object} [headers] - The headers to be included in the request (optional).
    * @return {*} returns an Observable containing the result of the request. Use subscribe method to extract the response.
    * @memberof GenericHttpService
    */

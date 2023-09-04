@@ -17,6 +17,8 @@ import { Observable, debounceTime, fromEvent, merge } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { SpinnerService } from '../../shared/services/spinner/spinner.service';
+import { Store } from '@ngrx/store';
+import * as AuthActions from '../../state/auth/auth.actions';
 
 @Component({
   selector: 'app-register',
@@ -33,9 +35,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-    public spinnerService: SpinnerService
+    public spinnerService: SpinnerService,
+    private store: Store
   ) {
     this.genericValidator = new GenericValidator();
   }
@@ -70,8 +71,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   register() {
     if (this.registerForm.invalid) return;
 
-    this.authService
-      .register(this.registerForm.value)
-      .subscribe(() => this.router.navigate(['dashboard']));
+    this.store.dispatch(
+      AuthActions.registerRequest({ credentials: this.registerForm.value })
+    );
   }
 }
