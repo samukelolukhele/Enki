@@ -19,10 +19,11 @@ import { IsMobileDirective } from './shared/directives/isMobile.directive';
 import { InterceptorService } from './shared/services/http-interceptors/http.interceptor.service';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { StoreModule } from '@ngrx/store';
-import { authReducer } from './state/auth/auth.reducer';
+import { reducers } from './state/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './state/auth/auth.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { metaReducers, storageMetaReducer } from './state/storage.metareducer';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       },
     }),
     FontAwesomeModule,
-    StoreModule.forRoot({ auth: authReducer }, {}),
+    StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],

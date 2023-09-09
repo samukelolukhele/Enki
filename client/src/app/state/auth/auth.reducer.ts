@@ -52,6 +52,6 @@ const _authReducer = createReducer(
   })
 );
 
-export function authReducer(state: any, action: any) {
+export function authReducer(state = initialState, action: any): State {
   return _authReducer(state, action);
 }
